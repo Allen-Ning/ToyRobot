@@ -17,6 +17,28 @@ module ToyRobot
       end
     end
 
+    # @return {Boolean}
+    def turn_left
+      puts is_on_board?
+      if is_on_board?
+        @direction = Direction.get_left_direction(@direction)
+        true
+      else
+        false
+      end
+    end
+
+    # @return {Boolean}
+    def turn_right
+      puts is_on_board?
+      if is_on_board?
+        @direction = Direction.get_right_direction(@direction)
+        true
+      else
+        false
+      end
+    end
+
     # @param  {Board} board
     # @return {Boolean}
     def is_coordinate_on_table?(board, coordinate)
@@ -29,6 +51,11 @@ module ToyRobot
       @current_coordinate.nil? ? @current_coordinate = coordinate : @current_coordinate.add_coordinate(coordinate)
     end
 
-    private :is_coordinate_on_table?, :set_coordinate
+    # @return {Boolean}
+    def is_on_board?
+      !@board.nil? and !@current_coordinate.nil? and !@direction.nil?
+    end
+
+    private :is_coordinate_on_table?, :set_coordinate, :is_on_board?
   end
 end
