@@ -30,7 +30,6 @@ module ToyRobot
 
     # @return {Boolean}
     def turn_right
-      puts is_on_board?
       if is_on_board?
         @direction = Direction.get_right_direction(@direction)
         true
