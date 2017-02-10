@@ -28,7 +28,7 @@ module ToyRobot
     end
 
     # @param  {String} name
-    # @return {Direction|nil}
+    # @return {Direction}
     # @raise  {DirectionNotFoundException}
     def self.get_direction(name)
       case name
