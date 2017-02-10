@@ -17,7 +17,7 @@ module ToyRobot
     # @param {Integer} y
     # @raise {DirectionInvalidValueException}
     def initialize(value, x, y)
-      raise DirectionInvalidValueException, DIRECTION_INVALID_VALUE if value < 0 or value > DIRECTIONS.size - 1
+      raise(DirectionInvalidValueException, DIRECTION_INVALID_VALUE) if value < 0 or value > DIRECTIONS.size - 1
 
       @value      = value
       @coordinate = Coordinate.new(x, y)
@@ -42,7 +42,7 @@ module ToyRobot
         when Direction::EAST
           Direction.new(DIRECTIONS.index(Direction::EAST), 1, 0)
         else
-          raise DirectionNotFoundException, DIRECTION_NOT_FOUND
+          raise(DirectionNotFoundException, DIRECTION_NOT_FOUND)
       end
     end
 
@@ -51,7 +51,7 @@ module ToyRobot
     # @raise  {DirectionNameNotFoundException}
     def self.find_index(name)
       index = DIRECTIONS.index(name)
-      index.nil? ? (raise DirectionNameNotFoundException, DIRECTION_NOT_FOUND) : index
+      index.nil? ? raise(DirectionNameNotFoundException, DIRECTION_NOT_FOUND) : index
     end
 
     # @param  {Direction} direction
