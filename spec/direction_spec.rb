@@ -95,7 +95,86 @@ module ToyRobot
       end
 
       it 'get invalid direction' do
-        expect { Direction.get_direction(:INVALID_DIRECTION_NAME) }.to raise_error DirectionNotFoundException
+        expect { Direction.get_direction(:INVALID_DIRECTION) }.to raise_error DirectionNotFoundException
+      end
+    end
+
+    context 'get valid left direction' do
+      it 'get left direction of north direction' do
+        direction      = Direction.get_direction(Direction::NORTH)
+        left_direction = Direction.get_left_direction(direction)
+        expect(left_direction.get_name).to eql(Direction::WEST)
+        expect(left_direction.coordinate.x).to eql(-1)
+        expect(left_direction.coordinate.y).to eql(0)
+      end
+
+      it 'get left direction of west direction' do
+        direction      = Direction.get_direction(Direction::WEST)
+        left_direction = Direction.get_left_direction(direction)
+        expect(left_direction.get_name).to eql(Direction::SOUTH)
+        expect(left_direction.coordinate.x).to eql(0)
+        expect(left_direction.coordinate.y).to eql(-1)
+      end
+
+      it 'get left direction of south direction' do
+        direction      = Direction.get_direction(Direction::SOUTH)
+        left_direction = Direction.get_left_direction(direction)
+        expect(left_direction.get_name).to eql(Direction::EAST)
+        expect(left_direction.coordinate.x).to eql(1)
+        expect(left_direction.coordinate.y).to eql(0)
+      end
+
+      it 'get left direction of east direction' do
+        direction      = Direction.get_direction(Direction::EAST)
+        left_direction = Direction.get_left_direction(direction)
+        expect(left_direction.get_name).to eql(Direction::NORTH)
+        expect(left_direction.coordinate.x).to eql(0)
+        expect(left_direction.coordinate.y).to eql(1)
+      end
+    end
+
+    context 'get valid right direction' do
+      it 'get right direction of north direction' do
+        direction       = Direction.get_direction(Direction::NORTH)
+        right_direction = Direction.get_right_direction(direction)
+        expect(right_direction.get_name).to eql(Direction::EAST)
+        expect(right_direction.coordinate.x).to eql(1)
+        expect(right_direction.coordinate.y).to eql(0)
+      end
+
+      it 'get right direction of west direction' do
+        direction       = Direction.get_direction(Direction::WEST)
+        right_direction = Direction.get_right_direction(direction)
+        expect(right_direction.get_name).to eql(Direction::NORTH)
+        expect(right_direction.coordinate.x).to eql(0)
+        expect(right_direction.coordinate.y).to eql(1)
+      end
+
+      it 'get right direction of south direction' do
+        direction       = Direction.get_direction(Direction::SOUTH)
+        right_direction = Direction.get_right_direction(direction)
+        expect(right_direction.get_name).to eql(Direction::WEST)
+        expect(right_direction.coordinate.x).to eql(-1)
+        expect(right_direction.coordinate.y).to eql(0)
+      end
+
+      it 'get right direction of east direction' do
+        direction       = Direction.get_direction(Direction::EAST)
+        right_direction = Direction.get_right_direction(direction)
+        expect(right_direction.get_name).to eql(Direction::SOUTH)
+        expect(right_direction.coordinate.x).to eql(0)
+        expect(right_direction.coordinate.y).to eql(-1)
+      end
+    end
+
+    context 'get left or right direction of an invalid direction' do
+      it 'get left direction of an invalid direction' do
+        expect { Direction.get_left_direction(:INVALID_DIRECTION) }.to raise_error ArgumentError
+      end
+
+      it 'get right direction of an invalid direction' do
+        expect { Direction.get_right_direction(:INVALID_DIRECTION) }.to raise_error ArgumentError
+
       end
     end
   end
