@@ -1,6 +1,6 @@
 module ToyRobot
   class Coordinate
-    attr_accessor :x, :y
+    attr_reader :x, :y
 
     # @param {Integer} x
     # @param {Integer} y

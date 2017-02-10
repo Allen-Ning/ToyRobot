@@ -1,6 +1,6 @@
 module ToyRobot
   class Board
-    attr_accessor :width, :height
+    attr_reader :width, :height
 
     WIDTH  = 5
     HEIGHT = 5
