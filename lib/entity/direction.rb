@@ -10,6 +10,7 @@ module ToyRobot
     DIRECTION_INVALID_VALUE  = 'direction value is invalid'
     DIRECTION_NOT_FOUND      = 'direction cannot be found by the given name'
     DIRECTION_NAME_NOT_FOUND = 'direction name cannot be found by the given value'
+    UNEXPECTED_ARGUMENT_TYPE = 'argument is expected to a object of Direction'
 
     # @param {Integer} value
     # @param {Integer} x
@@ -51,6 +52,30 @@ module ToyRobot
     def self.find_index(name)
       index = DIRECTIONS.index(name)
       index.nil? ? (raise DirectionNameNotFoundException, DIRECTION_NOT_FOUND) : index
+    end
+
+    # @param  {Direction} direction
+    # @return {Direction}
+    # @raise  {ArgumentError}
+    def self.get_left_direction(direction)
+      if direction.is_a?(Direction)
+        name = DIRECTIONS[(direction.value + 1) % DIRECTIONS.size]
+        get_direction(name)
+      else
+        raise(ArgumentError, UNEXPECTED_ARGUMENT_TYPE)
+      end
+    end
+
+    # @param  {Direction} direction
+    # @return {Direction}
+    # @raise  {ArgumentError}
+    def self.get_right_direction(direction)
+      if direction.is_a?(Direction)
+        name = DIRECTIONS[direction.value - 1]
+        get_direction(name)
+      else
+        raise(ArgumentError, UNEXPECTED_ARGUMENT_TYPE)
+      end
     end
   end
 end
