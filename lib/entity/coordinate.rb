@@ -8,5 +8,12 @@ module ToyRobot
       @x = x
       @y = y
     end
+
+    # @param  {Coordinate} coordinate
+    # @return {Void}
+    def add_coordinate(coordinate)
+      @x += coordinate.x
+      @y += coordinate.y
+    end
   end
 end
