@@ -4,7 +4,7 @@ require_relative '../entity/direction'
 
 module ToyRobot
   class CommandProcessor
-    
+
     # @param {Robot} robot
     # @param {Board} board
     def initialize(robot, board)
