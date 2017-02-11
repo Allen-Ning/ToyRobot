@@ -1,20 +1,17 @@
+require_relative '../exception/invalid_board_width_exception'
+require_relative '../exception/invalid_board_height_exception'
 module ToyRobot
   class Board
     attr_reader :width, :height
 
-    WIDTH  = 5
-    HEIGHT = 5
-
     # @param {Integer} width
     # @param {Integer} height
-    def initialize(width = WIDTH, height = HEIGHT)
-      if width > 0 and height > 0
-        @width  = width
-        @height = height
-      else
-        @width  = WIDTH
-        @height = HEIGHT
-      end
+    def initialize(width = 5, height = 5)
+      raise InvalidBoardWidthException, 'board width is invalid - equal or less than 0' if width <= 0
+      raise InvalidBoardHeightException, 'board height is invalid - equal or less than 0' if height <= 0
+
+      @width  = width
+      @height = height
     end
   end
 end
