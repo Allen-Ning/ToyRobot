@@ -10,6 +10,8 @@ module ToyRobot
     REPORT = 'REPORT'
     PLACE  = 'PLACE'
 
+    # @param {Robot} robot
+    # @param {Board} board
     def initialize(robot, board)
       @robot = robot
       @board = board
@@ -50,7 +52,7 @@ module ToyRobot
     end
 
     # @param  {String[]} params
-    # @return {Integer[]}
+    # @return {Coordinate}
     # @raise  {CommandParseException}
     def get_coordinates(params)
       x = Integer(params[0])
