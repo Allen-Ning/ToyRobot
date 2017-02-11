@@ -81,6 +81,6 @@ module ToyRobot
       end
     end
 
-    private :is_coordinate_on_table?, :set_coordinate, :is_on_board?
+    private :is_coordinate_on_table?, :set_coordinate, :is_on_board?, :can_move?
   end
 end
