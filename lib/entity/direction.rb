@@ -65,7 +65,7 @@ module ToyRobot
     def self.get_right_direction(name)
       if name.is_a?(Symbol)
         value = find_value(name)
-        value += 4 if value <= 0
+        value += DIRECTIONS.size if value <= 0
         name = INVERT_DIRECTIONS[value - 1]
         get_direction(name)
       else
