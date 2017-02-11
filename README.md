@@ -59,3 +59,18 @@ cd ToyRobot
 rspec spec
 ```
 
+## Simulator
+
+The simulator can be run with:
+
+```
+cd ToyRobot
+./bin/toy_robot.rb < samples/ExampleA 
+./bin/toy_robot.rb < samples/ExampleB
+./bin/toy_robot.rb < samples/ExampleC
+./bin/toy_robot.rb
+ 
+ 
+
+```
+
