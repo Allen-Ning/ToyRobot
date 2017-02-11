@@ -14,21 +14,11 @@ module ToyRobot
 
     context 'should not create invalid board' do
       it 'should not create invalid board width' do
-        board = Board.new(-width, height)
-        expect(board.width).to eql(Board::WIDTH)
-        expect(board.height).to eql(Board::HEIGHT)
+        expect { Board.new(-width, height) }.to raise_error InvalidBoardWidthException
       end
 
       it 'should not create invalid board height' do
-        board = Board.new(width, -height)
-        expect(board.width).to eql(Board::WIDTH)
-        expect(board.height).to eql(Board::HEIGHT)
-      end
-
-      it 'should not create invalid board width and height' do
-        board = Board.new(-width, -height)
-        expect(board.width).to eql(Board::WIDTH)
-        expect(board.height).to eql(Board::HEIGHT)
+        expect { Board.new(width, -height) }.to raise_error InvalidBoardHeightException
       end
     end
   end
