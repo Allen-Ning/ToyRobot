@@ -38,7 +38,7 @@ module ToyRobot
       end
 
       it 'should raise DirectionNameNotFoundException when using invalid direction value' do
-        expect { Direction.find_value(:INVALID_DIRECTION) }.to raise_error DirectionValueNotFound
+        expect { Direction.find_value(:INVALID_DIRECTION) }.to raise_error DirectionValueNotFoundException
       end
     end
 
