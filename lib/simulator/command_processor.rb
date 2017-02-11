@@ -5,15 +5,15 @@ require_relative '../entity/direction'
 module ToyRobot
   class CommandProcessor
 
-    # @param {Robot} robot
-    # @param {Board} board
+    # @param [Robot] robot
+    # @param [Board] board
     def initialize(robot, board)
       robot.set_board(board)
       @robot = robot
     end
 
-    # @param  {String}   raw_command
-    # @return {Array|nil}
+    # @param  [String]   raw_command
+    # @return [Array,nil]
     # @raise CommandParseException
     def process_command(raw_command)
       command_match = raw_command.split(' ').map(&:strip)
@@ -35,9 +35,9 @@ module ToyRobot
       end
     end
 
-    # @param  {String} params_str
-    # @return {Array}
-    # @raise  {CommandParseException}
+    # @param  [String] params_str
+    # @return [Array]
+    # @raise  [CommandParseException]
     def get_place_command_parameters(params_str)
       params = params_str.split(',').map(&:strip)
       raise CommandParseException, 'place command must contain x,y,direction' unless params.size == 3
@@ -46,9 +46,9 @@ module ToyRobot
       return direction, x, y
     end
 
-    # @param  {String[]} params
-    # @return {Integer[]}
-    # @raise  {CommandParseException}
+    # @param  [String[]]  params
+    # @return [Integer[]]
+    # @raise  [CommandParseException]
     def get_coordinates(params)
       x = Integer(params[0])
       y = Integer(params[1])
@@ -57,8 +57,8 @@ module ToyRobot
       raise CommandParseException, 'place coordinates must be integers'
     end
 
-    # @param {String[]}
-    # @param {Symbol}
+    # @param [String[]]
+    # @param [Symbol]
     def get_direction_name(params)
       params[2].to_sym
     end

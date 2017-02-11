@@ -5,8 +5,8 @@ module ToyRobot
   class Board
     attr_reader :width, :height
 
-    # @param {Integer} width
-    # @param {Integer} height
+    # @param [Integer] width
+    # @param [Integer] height
     def initialize(width = 5, height = 5)
       raise InvalidBoardWidthException, 'board width is invalid - equal or less than 0' if width <= 0
       raise InvalidBoardHeightException, 'board height is invalid - equal or less than 0' if height <= 0

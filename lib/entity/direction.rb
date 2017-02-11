@@ -10,19 +10,19 @@ module ToyRobot
     DIRECTIONS = { :NORTH => 0, :WEST => 1, :SOUTH => 2, :EAST => 3 }
     INVERT_DIRECTIONS = DIRECTIONS.invert
 
-    # @param {:Symbol} name
-    # @param {Integer} x
-    # @param {Integer} y
-    # @raise {DirectionInvalidValueException}
+    # @param [:Symbol] name
+    # @param [Integer] x
+    # @param [Integer] y
+    # @raise [DirectionInvalidValueException]
     def initialize(name, x, y)
       raise DirectionInvalidValueException, 'direction value is invalid' unless DIRECTIONS.has_key? name
       @name = name
       @coordinate = Coordinate.new(x, y)
     end
 
-    # @param  {Symbol} name
-    # @return {Direction}
-    # @raise  {DirectionNotFoundException}
+    # @param  [Symbol] name
+    # @return [Direction]
+    # @raise  [DirectionNotFoundException]
     def self.get_direction(name)
       case name
         when :NORTH
@@ -38,17 +38,17 @@ module ToyRobot
       end
     end
 
-    # @param  {Symbol} name
-    # @return {Integer}
-    # @raise  {DirectionValueNotFound}
+    # @param  [Symbol] name
+    # @return [Integer]
+    # @raise  [DirectionValueNotFound]
     def self.find_value(name)
       value = DIRECTIONS[name]
       value.nil? ? (raise DirectionValueNotFoundException, 'direction value cannot be found by the given name') : value
     end
 
-    # @param  {Symbol} name
-    # @return {Direction}
-    # @raise  {ArgumentError}
+    # @param  [Symbol] name
+    # @return [Direction]
+    # @raise  [ArgumentError]
     def self.get_left_direction(name)
       if name.is_a?(Symbol)
         value = find_value(name)
@@ -59,9 +59,9 @@ module ToyRobot
       end
     end
 
-    # @param  {Direction} name
-    # @return {Direction}
-    # @raise  {ArgumentError}
+    # @param  [Direction] name
+    # @return [Direction]
+    # @raise  [ArgumentError]
     def self.get_right_direction(name)
       if name.is_a?(Symbol)
         value = find_value(name)
