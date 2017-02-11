@@ -63,7 +63,7 @@ module ToyRobot
     # @param  {Integer} y
     # @return {Boolean}
     def is_coordinate_on_table?(x, y)
-      (!@board.nil? and x <= @board.width and y <= @board.height) ? true : false
+      (!@board.nil? && x <= @board.width && y <= @board.height) ? true : false
     end
 
     # @param  {Coordinate} coordinate
@@ -74,16 +74,16 @@ module ToyRobot
 
     # @return {Boolean}
     def is_on_board?
-      !@board.nil? and !@current_coordinate.nil? and !@direction.nil?
+      !@board.nil? && !@current_coordinate.nil? && !@direction.nil?
     end
 
     # @return {Boolean}
     def can_move?
       if is_on_board?
         coordinate = @direction.coordinate
-        if @current_coordinate.x + coordinate.x >= 0 and
-           @current_coordinate.x + coordinate.x <= @board.width and
-           @current_coordinate.y + coordinate.y >= 0 and
+        if @current_coordinate.x + coordinate.x >= 0 &&
+           @current_coordinate.x + coordinate.x <= @board.width &&
+           @current_coordinate.y + coordinate.y >= 0 &&
            @current_coordinate.y + coordinate.y <= @board.height
           true
         else
