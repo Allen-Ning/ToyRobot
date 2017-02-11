@@ -2,10 +2,10 @@ module ToyRobot
   class Direction
     attr_reader :value, :coordinate
 
-    NORTH = :north
-    SOUTH = :south
-    EAST  = :east
-    WEST  = :west
+    NORTH = :NORTH
+    SOUTH = :SOUTH
+    EAST  = :EAST
+    WEST  = :WEST
     DIRECTIONS = [Direction::NORTH, Direction::WEST, Direction::SOUTH, Direction::EAST].freeze
     DIRECTION_INVALID_VALUE  = 'direction value is invalid'
     DIRECTION_NOT_FOUND      = 'direction cannot be found by the given name'
