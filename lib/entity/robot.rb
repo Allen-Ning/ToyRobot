@@ -47,6 +47,11 @@ module ToyRobot
       end
     end
 
+    # @return {Array}
+    def report
+      is_on_board? ? [@current_coordinate.x, @current_coordinate.y, @direction.get_name] : []
+    end
+
     # @param  {Board} board
     # @return {Boolean}
     def is_coordinate_on_table?(board, coordinate)
