@@ -41,4 +41,21 @@ Displays the current placement and direction the robot is facing.<br/>
 
 **Please notice RIGHT must be using all capital letters**
 
+## Installation
+
+```
+git clone https://github.com/Allen-Ning/ToyRobot
+cd ToyRobot
+gem install bundler
+bundle install
+```
+
+## Tests
+
+Tests can be run with the:
+
+```
+cd ToyRobot
+rspec spec
+```
 
