@@ -14,6 +14,7 @@ module ToyRobot
       coordinate = Coordinate.new(x1, y1)
       another_coordinate = Coordinate.new(x2, y2)
       coordinate.add_coordinate(another_coordinate)
+
       expect(coordinate.x).to eql(x1 + x2)
       expect(coordinate.y).to eql(y1 + y2)
     end
