@@ -264,6 +264,22 @@ module ToyRobot
       it 'should not report when not on board' do
         expect(robot.report).to eql([])
       end
+
+      it 'should ignore command before a valid PLACE command' do
+        robot.move
+
+        expect(robot.report).to eql([])
+      end
+
+      it 'should ignore the second PLACE command' do
+        on_board
+        robot.place(:EAST, 3, 5)
+        robot.place(:WEST, 2, 2)
+
+        expect(robot.direction.name).to eql(:EAST)
+        expect(robot.current_coordinate.x).to eql(3)
+        expect(robot.current_coordinate.y).to eql(5)
+      end
     end
   end
 end

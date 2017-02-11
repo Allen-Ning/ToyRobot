@@ -15,7 +15,7 @@ module ToyRobot
     # @param  [Fixnum] y
     # @return [Boolean]
     def place(direction_name, x, y)
-      if is_coordinate_on_table?(x, y)
+      if !has_been_placed? && is_coordinate_on_table?(x, y)
         @direction = Direction.get_direction(direction_name)
         set_coordinate(Coordinate.new(x, y))
         true
@@ -59,6 +59,11 @@ module ToyRobot
       is_on_board? ? [ @direction.name, @current_coordinate.x, @current_coordinate.y] : []
     end
 
+    # @return [Boolean]
+    def has_been_placed?
+      @board && @current_coordinate && @direction ? true : false
+    end
+
     # @param  [Fixnum] x
     # @param  [Fixnum] y
     # @return [Boolean]
@@ -94,6 +99,6 @@ module ToyRobot
       end
     end
 
-    private :is_coordinate_on_table?, :set_coordinate, :is_on_board?, :can_move?
+    private :has_been_placed?, :is_coordinate_on_table?, :set_coordinate, :is_on_board?, :can_move?
   end
 end
