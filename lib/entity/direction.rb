@@ -11,8 +11,8 @@ module ToyRobot
     INVERT_DIRECTIONS = DIRECTIONS.invert
 
     # @param [:Symbol] name
-    # @param [Integer] x
-    # @param [Integer] y
+    # @param [Fixnum] x
+    # @param [Fixnum] y
     # @raise [DirectionInvalidValueException]
     def initialize(name, x, y)
       raise DirectionInvalidValueException, 'direction value is invalid' unless DIRECTIONS.has_key? name
@@ -39,7 +39,7 @@ module ToyRobot
     end
 
     # @param  [Symbol] name
-    # @return [Integer]
+    # @return [Fixnum]
     # @raise  [DirectionValueNotFound]
     def self.find_value(name)
       value = DIRECTIONS[name]

@@ -47,14 +47,14 @@ module ToyRobot
     end
 
     # @param  [String[]]  params
-    # @return [Integer[]]
+    # @return [Fixnum[]]
     # @raise  [CommandParseException]
     def get_coordinates(params)
       x = Integer(params[0])
       y = Integer(params[1])
       return x, y
     rescue ArgumentError
-      raise CommandParseException, 'place coordinates must be integers'
+      raise CommandParseException, 'place coordinates must be Fixnum'
     end
 
     # @param [String[]]

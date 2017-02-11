@@ -11,8 +11,8 @@ module ToyRobot
     end
 
     # @param  [Symbol]  direction_name
-    # @param  [Integer] x
-    # @param  [Integer] y
+    # @param  [Fixnum] x
+    # @param  [Fixnum] y
     # @return [Boolean]
     def place(direction_name, x, y)
       if is_coordinate_on_table?(x, y)
@@ -59,8 +59,8 @@ module ToyRobot
       is_on_board? ? [ @direction.name, @current_coordinate.x, @current_coordinate.y] : []
     end
 
-    # @param  [Integer] x
-    # @param  [Integer] y
+    # @param  [Fixnum] x
+    # @param  [Fixnum] y
     # @return [Boolean]
     def is_coordinate_on_table?(x, y)
       (!@board.nil? && x <= @board.width && y <= @board.height) ? true : false
