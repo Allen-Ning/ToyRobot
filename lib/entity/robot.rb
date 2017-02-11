@@ -1,3 +1,5 @@
+require_relative '../entity/direction'
+
 module ToyRobot
   class Robot
     attr_reader :board, :current_coordinate, :direction
@@ -72,7 +74,7 @@ module ToyRobot
     # @return {Boolean}
     def can_move?
       if is_on_board?
-        coordinate = direction.coordinate
+        coordinate = @direction.coordinate
         if @current_coordinate.x + coordinate.x >= 0 and
            @current_coordinate.x + coordinate.x <= @board.width and
            @current_coordinate.y + coordinate.y >= 0 and
