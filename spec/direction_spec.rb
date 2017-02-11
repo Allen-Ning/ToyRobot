@@ -14,25 +14,25 @@ module ToyRobot
     end
 
     context 'get direction name' do
-      it 'get north direction name' do
+      it 'get NORTH direction name' do
         index     = Direction::DIRECTIONS.index(Direction::NORTH)
         direction = Direction.new(index, 0, 1)
         expect(direction.get_name).to eql(Direction::NORTH)
       end
 
-      it 'get west direction name' do
+      it 'get WEST direction name' do
         index     = Direction::DIRECTIONS.index(Direction::WEST)
         direction = Direction.new(index, -1, 0)
         expect(direction.get_name).to eql(Direction::WEST)
       end
 
-      it 'get south direction name' do
+      it 'get SOUTH direction name' do
         index     = Direction::DIRECTIONS.index(Direction::SOUTH)
         direction = Direction.new(index, 0, -1)
         expect(direction.get_name).to eql(Direction::SOUTH)
       end
 
-      it 'get west direction name' do
+      it 'get WEST direction name' do
         index     = Direction::DIRECTIONS.index(Direction::WEST)
         direction = Direction.new(index, 1, 0)
         expect(direction.get_name).to eql(Direction::WEST)
@@ -40,22 +40,22 @@ module ToyRobot
     end
 
     context 'find index' do
-      it 'find north direction index' do
+      it 'find NORTH direction index' do
         index = Direction.find_index(Direction::NORTH)
         expect(index).to eql(0)
       end
 
-      it 'find north direction index' do
+      it 'find WEST direction index' do
         index = Direction.find_index(Direction::WEST)
         expect(index).to eql(1)
       end
 
-      it 'find north direction index' do
+      it 'find SOUTH direction index' do
         index = Direction.find_index(Direction::SOUTH)
         expect(index).to eql(2)
       end
 
-      it 'find north direction index' do
+      it 'find EAST direction index' do
         index = Direction.find_index(Direction::EAST)
         expect(index).to eql(3)
       end
@@ -66,28 +66,28 @@ module ToyRobot
     end
 
     context 'get direction' do
-      it 'get north direction' do
+      it 'get NORTH direction' do
         direction = Direction.get_direction(Direction::NORTH)
         expect(direction.get_name).to eql(Direction::NORTH)
         expect(direction.coordinate.x).to eql(0)
         expect(direction.coordinate.y).to eql(1)
       end
 
-      it 'get west direction' do
+      it 'get WEST direction' do
         direction = Direction.get_direction(Direction::WEST)
         expect(direction.get_name).to eql(Direction::WEST)
         expect(direction.coordinate.x).to eql(-1)
         expect(direction.coordinate.y).to eql(0)
       end
 
-      it 'get south direction' do
+      it 'get SOUTH direction' do
         direction = Direction.get_direction(Direction::SOUTH)
         expect(direction.get_name).to eql(Direction::SOUTH)
         expect(direction.coordinate.x).to eql(0)
         expect(direction.coordinate.y).to eql(-1)
       end
 
-      it 'get east direction' do
+      it 'get EAST direction' do
         direction = Direction.get_direction(Direction::EAST)
         expect(direction.get_name).to eql(Direction::EAST)
         expect(direction.coordinate.x).to eql(1)
@@ -100,7 +100,7 @@ module ToyRobot
     end
 
     context 'get valid left direction' do
-      it 'get left direction of north direction' do
+      it 'get left direction of NORTH direction' do
         direction      = Direction.get_direction(Direction::NORTH)
         left_direction = Direction.get_left_direction(direction)
         expect(left_direction.get_name).to eql(Direction::WEST)
@@ -108,7 +108,7 @@ module ToyRobot
         expect(left_direction.coordinate.y).to eql(0)
       end
 
-      it 'get left direction of west direction' do
+      it 'get left direction of WEST direction' do
         direction      = Direction.get_direction(Direction::WEST)
         left_direction = Direction.get_left_direction(direction)
         expect(left_direction.get_name).to eql(Direction::SOUTH)
@@ -116,7 +116,7 @@ module ToyRobot
         expect(left_direction.coordinate.y).to eql(-1)
       end
 
-      it 'get left direction of south direction' do
+      it 'get left direction of SOUTH direction' do
         direction      = Direction.get_direction(Direction::SOUTH)
         left_direction = Direction.get_left_direction(direction)
         expect(left_direction.get_name).to eql(Direction::EAST)
@@ -124,7 +124,7 @@ module ToyRobot
         expect(left_direction.coordinate.y).to eql(0)
       end
 
-      it 'get left direction of east direction' do
+      it 'get left direction of EAST direction' do
         direction      = Direction.get_direction(Direction::EAST)
         left_direction = Direction.get_left_direction(direction)
         expect(left_direction.get_name).to eql(Direction::NORTH)
@@ -134,7 +134,7 @@ module ToyRobot
     end
 
     context 'get valid right direction' do
-      it 'get right direction of north direction' do
+      it 'get right direction of NORTH direction' do
         direction       = Direction.get_direction(Direction::NORTH)
         right_direction = Direction.get_right_direction(direction)
         expect(right_direction.get_name).to eql(Direction::EAST)
@@ -142,7 +142,7 @@ module ToyRobot
         expect(right_direction.coordinate.y).to eql(0)
       end
 
-      it 'get right direction of west direction' do
+      it 'get right direction of WEST direction' do
         direction       = Direction.get_direction(Direction::WEST)
         right_direction = Direction.get_right_direction(direction)
         expect(right_direction.get_name).to eql(Direction::NORTH)
@@ -150,7 +150,7 @@ module ToyRobot
         expect(right_direction.coordinate.y).to eql(1)
       end
 
-      it 'get right direction of south direction' do
+      it 'get right direction of SOUTH direction' do
         direction       = Direction.get_direction(Direction::SOUTH)
         right_direction = Direction.get_right_direction(direction)
         expect(right_direction.get_name).to eql(Direction::WEST)
@@ -158,7 +158,7 @@ module ToyRobot
         expect(right_direction.coordinate.y).to eql(0)
       end
 
-      it 'get right direction of east direction' do
+      it 'get right direction of EAST direction' do
         direction       = Direction.get_direction(Direction::EAST)
         right_direction = Direction.get_right_direction(direction)
         expect(right_direction.get_name).to eql(Direction::SOUTH)
