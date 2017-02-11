@@ -8,9 +8,9 @@ module ToyRobot
     attr_reader :name, :coordinate
 
     DIRECTIONS = { :NORTH => 0, :WEST => 1, :SOUTH => 2, :EAST => 3 }
-    INVERT_DIRECTIONS = DIRECTIONS.invert
+    INVERTED_DIRECTIONS = DIRECTIONS.invert
 
-    # @param [:Symbol] name
+    # @param [Symbol] name
     # @param [Fixnum] x
     # @param [Fixnum] y
     # @raise [DirectionInvalidValueException]
@@ -52,7 +52,7 @@ module ToyRobot
     def self.get_left_direction(name)
       if name.is_a?(Symbol)
         value = find_value(name)
-        name = INVERT_DIRECTIONS[(value + 1) % INVERT_DIRECTIONS.size]
+        name = INVERTED_DIRECTIONS[(value + 1) % INVERTED_DIRECTIONS.size]
         get_direction(name)
       else
         raise ArgumentError, 'argument is expected to a symbol'
@@ -66,7 +66,7 @@ module ToyRobot
       if name.is_a?(Symbol)
         value = find_value(name)
         value += DIRECTIONS.size if value <= 0
-        name = INVERT_DIRECTIONS[value - 1]
+        name = INVERTED_DIRECTIONS[value - 1]
         get_direction(name)
       else
         raise ArgumentError, 'argument is expected to a symbol'
