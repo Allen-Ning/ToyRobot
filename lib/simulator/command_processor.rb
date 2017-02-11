@@ -1,15 +1,10 @@
+require_relative '../exception/command_parse_exception'
+require_relative '../entity/coordinate'
+require_relative '../entity/direction'
+
 module ToyRobot
   class CommandProcessor
-
-    PLACE_COORDINATE_INTEGER   = 'place coordinates must be integers'
-    PLACE_COMMAND_WRONG_FORMAT = 'PLACE command must contain x,y,direction'
-
-    MOVE   = 'MOVE'
-    LEFT   = 'LEFT'
-    RIGHT  = 'RIGHT'
-    REPORT = 'REPORT'
-    PLACE  = 'PLACE'
-
+    
     # @param {Robot} robot
     # @param {Board} board
     def initialize(robot, board)
@@ -24,19 +19,19 @@ module ToyRobot
       command_match = raw_command.split(' ').map(&:strip)
       return if command_match.size == 0
       case command_match[0]
-        when PLACE
+        when 'PLACE'
           coordinate, direction = get_place_command_parameters(command_match[1])
           @robot.set_position(@board, coordinate, direction)
-        when LEFT
+        when 'LEFT'
           @robot.turn_left
-        when RIGHT
+        when 'RIGHT'
           @robot.turn_right
-        when MOVE
+        when 'MOVE'
           @robot.move
-        when REPORT
+        when 'REPORT'
           @robot.report
         else
-          raise CommandParseException, "Unrecognized command - #{command_match[0]}"
+          raise CommandParseException, 'unrecognized command - ' + command_match[0]
       end
     end
 
@@ -45,7 +40,7 @@ module ToyRobot
     # @raise  {CommandParseException}
     def get_place_command_parameters(params_str)
       params = params_str.split(',').map(&:strip)
-      raise CommandParseException, PLACE_COMMAND_WRONG_FORMAT unless params.size == 3
+      raise CommandParseException, 'place command must contain x,y,direction' unless params.size == 3
       coordinate = get_coordinates(params)
       direction  = get_direction(params)
       return coordinate, direction
@@ -60,7 +55,7 @@ module ToyRobot
       coordinate = Coordinate.new(x, y)
       return coordinate
     rescue ArgumentError
-      raise CommandParseException, PLACE_COORDINATE_INTEGER
+      raise CommandParseException, 'place coordinates must be integers'
     end
 
     # @param {String[]}
