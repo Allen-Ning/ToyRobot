@@ -4,7 +4,7 @@ module ToyRobot
   describe Coordinate do
     let(:random) { Random.new }
 
-    it 'add coordinate' do
+    it 'should add coordinate' do
       x1 = random.rand(-Random.new_seed..Random.new_seed)
       y1 = random.rand(-Random.new_seed..Random.new_seed)
 

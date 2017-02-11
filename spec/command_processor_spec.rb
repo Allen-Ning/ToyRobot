@@ -8,27 +8,27 @@ module ToyRobot
     let(:command_processor) { CommandProcessor.new(robot, board) }
 
     context 'should process command' do
-      it 'should process PLACE command' do
+      it 'should invoke set position method' do
         expect(robot).to receive(:set_position)
         command_processor.process_command('PLACE 2,3,NORTH')
       end
 
-      it 'should call turn left method' do
+      it 'should invoke turn left method' do
         expect(robot).to receive(:turn_left)
         command_processor.process_command('LEFT')
       end
 
-      it 'should call turn right method' do
+      it 'should invoke turn right method' do
         expect(robot).to receive(:turn_right)
         command_processor.process_command('RIGHT')
       end
 
-      it 'should call move method' do
+      it 'should invoke move method' do
         expect(robot).to receive(:move)
         command_processor.process_command('MOVE')
       end
 
-      it 'should call report method' do
+      it 'should invoke report method' do
         expect(robot).to receive(:report)
         command_processor.process_command('REPORT')
       end
