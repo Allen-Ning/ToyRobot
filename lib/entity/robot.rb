@@ -4,15 +4,20 @@ module ToyRobot
   class Robot
     attr_reader :board, :current_coordinate, :direction
 
-    # @param {Board} board
-    # @param {Coordinate} coordinate
-    # @param {direction} direction
+    # @param  {Board} board
+    # @return {void}
+    def set_board(board)
+      @board = board
+    end
+
+    # @param  {Symbol}  direction_name
+    # @param  {Integer} x
+    # @param  {Integer} y
     # @return {Boolean}
-    def set_position(board, coordinate, direction)
-      if is_coordinate_on_table?(board, coordinate)
-        @board     = board
-        @direction = direction
-        set_coordinate(coordinate)
+    def place(direction_name, x, y)
+      if is_coordinate_on_table?(x, y)
+        @direction = Direction.get_direction(direction_name)
+        set_coordinate(Coordinate.new(x, y))
         true
       else
         false
@@ -22,7 +27,7 @@ module ToyRobot
     # @return {Boolean}
     def turn_left
       if is_on_board?
-        @direction = Direction.get_left_direction(@direction)
+        @direction = Direction.get_left_direction(@direction.name)
         true
       else
         false
@@ -32,7 +37,7 @@ module ToyRobot
     # @return {Boolean}
     def turn_right
       if is_on_board?
-        @direction = Direction.get_right_direction(@direction)
+        @direction = Direction.get_right_direction(@direction.name)
         true
       else
         false
@@ -51,13 +56,14 @@ module ToyRobot
 
     # @return {Array}
     def report
-      is_on_board? ? [@current_coordinate.x, @current_coordinate.y, @direction.get_name] : []
+      is_on_board? ? [ @direction.name, @current_coordinate.x, @current_coordinate.y] : []
     end
 
-    # @param  {Board} board
+    # @param  {Integer} x
+    # @param  {Integer} y
     # @return {Boolean}
-    def is_coordinate_on_table?(board, coordinate)
-      (coordinate.x <= board.width and coordinate.y <= board.height) ? true : false
+    def is_coordinate_on_table?(x, y)
+      (!@board.nil? and x <= @board.width and y <= @board.height) ? true : false
     end
 
     # @param  {Coordinate} coordinate
