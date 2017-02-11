@@ -1,4 +1,5 @@
-require 'spec_helper'
+require_relative '../lib/simulator/command_processor'
+require_relative '../lib/entity/robot'
 
 module ToyRobot
   describe CommandProcessor do

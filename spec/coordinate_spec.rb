@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../lib/entity/coordinate'
 
 module ToyRobot
   describe Coordinate do

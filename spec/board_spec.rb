@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../lib/entity/board'
 
 module ToyRobot
   describe Board do

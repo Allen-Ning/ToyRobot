@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../lib/entity/direction'
 
 module ToyRobot
   describe Direction do

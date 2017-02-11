@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module ToyRobot
   describe Robot do
     let(:robot) { Robot.new }
