@@ -9,11 +9,11 @@ module ToyRobot
     let(:direction_south) { Direction.get_direction(Direction::SOUTH) }
     let(:direction_east) { Direction.get_direction(Direction::EAST) }
 
-    let(:coordinate) { Coordinate.new(0, 0) }
+    let(:random) {Random.new}
+    let(:coordinate) { Coordinate.new(random.rand(1..board.width - 1), random.rand(1..board.height - 1)) }
     let(:invalid_x_coordinate) { Coordinate.new(random.rand(board.width + 1..Random.new_seed), random.rand(0..board.height)) }
     let(:invalid_y_coordinate) { Coordinate.new(random.rand(0..board.width), random.rand(board.height + 1..Random.new_seed)) }
     let(:invalid_xy_coordinate) { Coordinate.new(random.rand(board.width + 1..Random.new_seed), random.rand(board.height + 1..Random.new_seed)) }
-    let(:random) {Random.new}
 
     context 'set robot position' do
       it 'set valid robot position' do
@@ -112,6 +112,44 @@ module ToyRobot
       it 'turn right when robot is not board - x, y coordinates larger than the width and height of board' do
         robot.set_position(board, invalid_xy_coordinate, direction_north)
         expect(robot.turn_right).to be_false
+      end
+    end
+
+    context 'move' do
+      it 'move when facing NORTH' do
+        robot.set_position(board, coordinate, direction_north)
+        robot.move
+        expect(robot.direction.get_name).to eql(Direction::NORTH)
+        expect(robot.current_coordinate.x).to eql(coordinate.x)
+        expect(robot.current_coordinate.y).to eql(coordinate.y + 1)
+      end
+
+      it 'move when facing WEST' do
+        robot.set_position(board, coordinate, direction_west)
+        robot.move
+        expect(robot.direction.get_name).to eql(Direction::WEST)
+        expect(robot.current_coordinate.x).to eql(coordinate.x - 1)
+        expect(robot.current_coordinate.y).to eql(coordinate.y)
+      end
+
+      it 'move when facing SOUTH' do
+        robot.set_position(board, coordinate, direction_south)
+        robot.move
+        expect(robot.direction.get_name).to eql(Direction::SOUTH)
+        expect(robot.current_coordinate.x).to eql(coordinate.x)
+        expect(robot.current_coordinate.y).to eql(coordinate.y - 1)
+      end
+
+      it 'move when facing EAST' do
+        robot.set_position(board, coordinate, direction_east)
+        robot.move
+        expect(robot.direction.get_name).to eql(Direction::EAST)
+        expect(robot.current_coordinate.x).to eql(coordinate.x + 1)
+        expect(robot.current_coordinate.y).to eql(coordinate.y)
+      end
+
+      it 'move when not on board' do
+        expect(robot.move).to be_false
       end
     end
   end
