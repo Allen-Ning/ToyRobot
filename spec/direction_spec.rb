@@ -5,6 +5,7 @@ module ToyRobot
     context 'should create direction instance' do
       it 'should not create invalid direction instance' do
         random = Random.new
+
         expect { Direction.new(:SOUTHEAST,
                                random.rand(-Random.new_seed..Random.new_seed),
                                random.rand(-Random.new_seed..Random.new_seed))

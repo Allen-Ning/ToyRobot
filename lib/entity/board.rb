@@ -1,5 +1,6 @@
 require_relative '../exception/invalid_board_width_exception'
 require_relative '../exception/invalid_board_height_exception'
+
 module ToyRobot
   class Board
     attr_reader :width, :height

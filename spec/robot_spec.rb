@@ -7,7 +7,6 @@ module ToyRobot
     let(:invalid_x_coordinate) { random.rand(board.width + 1..Random.new_seed) }
     let(:invalid_y_coordinate) { random.rand(board.height + 1..Random.new_seed) }
 
-
     context 'should set robot position' do
       it 'should set valid robot position' do
         on_board
