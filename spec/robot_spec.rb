@@ -152,5 +152,31 @@ module ToyRobot
         expect(robot.move).to be_false
       end
     end
+
+    context 'report' do
+      it 'report when facing NORTH on board' do
+        robot.set_position(board, coordinate, direction_north)
+        expect(robot.report).to eql([coordinate.x, coordinate.y, direction_north.get_name])
+      end
+
+      it 'report when facing WEST on board' do
+        robot.set_position(board, coordinate, direction_west)
+        expect(robot.report).to eql([coordinate.x, coordinate.y, direction_west.get_name])
+      end
+
+      it 'report when facing SOUTH on board' do
+        robot.set_position(board, coordinate, direction_south)
+        expect(robot.report).to eql([coordinate.x, coordinate.y, direction_south.get_name])
+      end
+
+      it 'report when on facing EAST on board' do
+        robot.set_position(board, coordinate, direction_east)
+        expect(robot.report).to eql([coordinate.x, coordinate.y, direction_east.get_name])
+      end
+
+      it 'report when not on board' do
+        expect(robot.report).to eql([])
+      end
+    end
   end
 end
