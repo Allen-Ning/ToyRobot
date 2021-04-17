@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-require 'ffaker'
-
-require_relative '../lib/model/board'
+require 'spec_helper'
 
 module ToyRobot
   describe Board do
     let(:width)  { FFaker::Random.rand(1..1000) }
     let(:height) { FFaker::Random.rand(1..1000) }
 
-    subject { Board.new(width, height) }
+    subject { Board.new(width: width, height: height) }
 
     it 'should create valid board' do
       expect(subject).to have_attributes(

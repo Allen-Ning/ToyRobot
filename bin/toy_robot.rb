@@ -5,6 +5,6 @@ require_relative '../lib/simulator/robot_runner'
 
 begin
   ToyRobot::RobotRunner.new.run
-rescue Exception => e
+rescue Error => e
   warn e.message
 end

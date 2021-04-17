@@ -20,7 +20,7 @@ module ToyRobot
       raise DirectionInvalidValueError, 'direction value is invalid' unless DIRECTIONS.key? name
 
       @name = name
-      @coordinate = Coordinate.new(x, y)
+      @coordinate = Coordinate.new(x: x, y: y)
     end
 
     # @param  [Symbol] name

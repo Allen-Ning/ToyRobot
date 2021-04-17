@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../lib/model/direction'
-
 module ToyRobot
   describe Direction do
     context 'should create direction instance' do

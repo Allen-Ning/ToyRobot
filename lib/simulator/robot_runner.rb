@@ -8,8 +8,8 @@ module ToyRobot
   class RobotRunner
     # @param [Robot] robot
     # @param [Board] board
-    def initialize(robot = Robot.new, board = Board.new)
-      @command_processor = CommandProcessor.new(robot, board)
+    def initialize(robot: Robot.new, board: Board.new)
+      @command_processor = CommandProcessor.new(robot: robot, board: board)
     end
 
     # @param  [Array] data

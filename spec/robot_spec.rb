@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 module ToyRobot
   describe Robot do
     let(:robot) { Robot.new }
@@ -37,7 +35,7 @@ module ToyRobot
       end
 
       context 'should set robot position' do
-        subject { robot.place(value, x, y) }
+        subject { robot.place(direction_name: value, x: x, y: y) }
 
         context 'should set valid robot position' do
           let(:value) { :NORTH }
@@ -52,8 +50,11 @@ module ToyRobot
           let(:x) { invalid_x_coordinate }
 
           it {
-            expect { subject }.to not_change { robot.direction }.from(nil)
-                                                                .and not_change { robot.current_coordinate }.from(nil)
+            expect { subject }
+              .to not_change { robot.direction }
+              .from(nil)
+              .and not_change { robot.current_coordinate }
+              .from(nil)
 
             expect(subject).to be false
           }
@@ -64,8 +65,11 @@ module ToyRobot
           let(:x) { invalid_x_coordinate }
 
           it {
-            expect { subject }.to not_change { robot.direction }.from(nil)
-                                                                .and not_change { robot.current_coordinate }.from(nil)
+            expect { subject }
+              .to not_change { robot.direction }
+              .from(nil)
+              .and not_change { robot.current_coordinate }
+              .from(nil)
 
             expect(subject).to be false
           }
@@ -77,8 +81,11 @@ module ToyRobot
           let(:y) { invalid_y_coordinate }
 
           it {
-            expect { subject }.to not_change { robot.direction }.from(nil)
-                                                                .and not_change { robot.current_coordinate }.from(nil)
+            expect { subject }
+              .to not_change { robot.direction }
+              .from(nil)
+              .and not_change { robot.current_coordinate }
+              .from(nil)
 
             expect(subject).to be false
           }
@@ -89,14 +96,17 @@ module ToyRobot
         subject { robot.turn_left }
 
         before do
-          robot.place(value, x, y)
+          robot.place(direction_name: value, x: x, y: y)
         end
 
         context 'should turn left when facing NORTH' do
           let(:value) { :NORTH }
 
           it '' do
-            expect { subject }.to change { robot.direction.name }.from(:NORTH).to(:WEST)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:NORTH)
+              .to(:WEST)
           end
         end
 
@@ -104,7 +114,10 @@ module ToyRobot
           let(:value) { :WEST }
 
           it '' do
-            expect { subject }.to change { robot.direction.name }.from(:WEST).to(:SOUTH)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:WEST)
+              .to(:SOUTH)
           end
         end
 
@@ -112,7 +125,10 @@ module ToyRobot
           let(:value) { :SOUTH }
 
           it '' do
-            expect { subject }.to change { robot.direction.name }.from(:SOUTH).to(:EAST)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:SOUTH)
+              .to(:EAST)
           end
         end
 
@@ -120,7 +136,10 @@ module ToyRobot
           let(:value) { :EAST }
 
           it '' do
-            expect { subject }.to change { robot.direction.name }.from(:EAST).to(:NORTH)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:EAST)
+              .to(:NORTH)
           end
         end
 
@@ -175,14 +194,17 @@ module ToyRobot
         subject { robot.turn_right }
 
         before do
-          robot.place(value, x, y)
+          robot.place(direction_name: value, x: x, y: y)
         end
 
         context 'should turn right when facing NORTH' do
           let(:value) { :NORTH }
 
           it {
-            expect { subject }.to change { robot.direction.name }.from(:NORTH).to(:EAST)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:NORTH)
+              .to(:EAST)
           }
         end
 
@@ -190,7 +212,10 @@ module ToyRobot
           let(:value) { :WEST }
 
           it {
-            expect { subject }.to change { robot.direction.name }.from(:WEST).to(:NORTH)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:WEST)
+              .to(:NORTH)
           }
         end
 
@@ -198,7 +223,10 @@ module ToyRobot
           let(:value) { :SOUTH }
 
           it {
-            expect { subject }.to change { robot.direction.name }.from(:SOUTH).to(:WEST)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:SOUTH)
+              .to(:WEST)
           }
         end
 
@@ -206,7 +234,10 @@ module ToyRobot
           let(:value) { :EAST }
 
           it {
-            expect { subject }.to change { robot.direction.name }.from(:EAST).to(:SOUTH)
+            expect { subject }
+              .to change { robot.direction.name }
+              .from(:EAST)
+              .to(:SOUTH)
           }
         end
 
@@ -264,7 +295,7 @@ module ToyRobot
         subject { robot.move }
 
         before do
-          robot.place(value, x, y)
+          robot.place(direction_name: value, x: x, y: y)
         end
 
         context 'should move when facing NORTH' do
@@ -335,7 +366,7 @@ module ToyRobot
         subject { robot.move }
 
         before do
-          robot.place(value, x, y)
+          robot.place(direction_name: value, x: x, y: y)
         end
 
         context 'should not move over board width' do
@@ -411,7 +442,7 @@ module ToyRobot
         subject { robot.report }
 
         before do
-          robot.place(value, x, y)
+          robot.place(direction_name: value, x: x, y: y)
         end
 
         context 'should report when facing NORTH on board' do
@@ -442,8 +473,9 @@ module ToyRobot
           let(:value) { :EAST }
           let(:x) { 3 }
           let(:y) { 5 }
+
           it '' do
-            robot.place(:WEST, 2, 2)
+            robot.place(direction_name: :WEST, x: 2, y: 2)
 
             is_expected.to eq([:EAST, x, y])
           end

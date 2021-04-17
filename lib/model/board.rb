@@ -9,7 +9,7 @@ module ToyRobot
 
     # @param [Fixnum] width
     # @param [Fixnum] height
-    def initialize(width = 5, height = 5)
+    def initialize(width: 5, height: 5)
       raise InvalidBoardWidthError, 'board width is invalid - equal or less than 0' if width <= 0
       raise InvalidBoardHeightError, 'board height is invalid - equal or less than 0' if height <= 0
 

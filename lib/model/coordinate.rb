@@ -6,7 +6,7 @@ module ToyRobot
 
     # @param [Fixnum] x
     # @param [Fixnum] y
-    def initialize(x = 0, y = 0)
+    def initialize(x: 0, y: 0)
       @x = x
       @y = y
     end

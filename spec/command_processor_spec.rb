@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-require 'ffaker'
-
-require_relative '../lib/simulator/command_processor'
-require_relative '../lib/model/robot'
+require 'spec_helper'
 
 module ToyRobot
   describe CommandProcessor do
     let(:robot) { Robot.new }
     let(:board) { Board.new }
-    let(:command_processor) { CommandProcessor.new(robot, board) }
+    let(:command_processor) { CommandProcessor.new(robot: robot, board: board) }
 
     subject { command_processor.process_command(command) }
 
@@ -18,7 +15,7 @@ module ToyRobot
         let(:command) { 'PLACE 2,3,NORTH' }
 
         it 'should invoke set position method' do
-          expect(robot).to receive(:place).with(:NORTH, 2, 3)
+          expect(robot).to receive(:place).with(direction_name: :NORTH, x: 2, y: 3)
 
           subject
         end

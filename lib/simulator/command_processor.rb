@@ -8,7 +8,7 @@ module ToyRobot
   class CommandProcessor
     # @param [Robot] robot
     # @param [Board] board
-    def initialize(robot, board)
+    def initialize(robot:, board:)
       robot.set_board(board)
       @robot = robot
     end
@@ -17,13 +17,14 @@ module ToyRobot
     # @return [Array,nil]
     # @raise CommandParseError
     def process_command(raw_command)
+      # multiple space
       command_match = raw_command.split(' ').map(&:strip)
       return if command_match.size.zero?
 
       case command_match[0]
       when 'PLACE'
         direction, x, y = get_place_command_parameters(command_match[1])
-        @robot.place(direction, x, y)
+        @robot.place(direction_name: direction, x: x, y: y)
       when 'LEFT'
         @robot.turn_left
       when 'RIGHT'
