@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'entity/direction'
+require 'model/direction'
 
 module ToyRobot
   class Robot

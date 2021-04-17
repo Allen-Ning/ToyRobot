@@ -3,7 +3,7 @@
 require 'ffaker'
 
 require_relative '../lib/simulator/command_processor'
-require_relative '../lib/entity/robot'
+require_relative '../lib/model/robot'
 
 module ToyRobot
   describe CommandProcessor do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/entity/direction'
+require_relative '../lib/model/direction'
 
 module ToyRobot
   describe Direction do

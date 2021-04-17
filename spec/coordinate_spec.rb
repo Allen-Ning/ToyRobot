@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/entity/coordinate'
+require_relative '../lib/model/coordinate'
 
 module ToyRobot
   describe Coordinate do

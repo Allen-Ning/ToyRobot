@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'error/command_parse_error'
-require 'entity/coordinate'
-require 'entity/direction'
+require 'model/coordinate'
+require 'model/direction'
 
 module ToyRobot
   class CommandProcessor

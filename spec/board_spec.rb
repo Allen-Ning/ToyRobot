@@ -2,7 +2,7 @@
 
 require 'ffaker'
 
-require_relative '../lib/entity/board'
+require_relative '../lib/model/board'
 
 module ToyRobot
   describe Board do
