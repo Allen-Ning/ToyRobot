@@ -1,1 +1,3 @@
---color --format nested
+--color
+--format progress
+--order rand

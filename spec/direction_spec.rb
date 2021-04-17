@@ -6,157 +6,253 @@ module ToyRobot
       it 'should not create invalid direction instance' do
         random = Random.new
 
-        expect { Direction.new(:SOUTHEAST,
-                               random.rand(-Random.new_seed..Random.new_seed),
-                               random.rand(-Random.new_seed..Random.new_seed))
+        expect { Direction.new(
+                  :SOUTHEAST,
+                  random.rand(-Random.new_seed..Random.new_seed),
+                  random.rand(-Random.new_seed..Random.new_seed),
+                )
                }.to raise_error DirectionInvalidValueException
       end
     end
 
     context 'should find value' do
-      it 'should find NORTH direction value' do
-        index = Direction.find_value(:NORTH)
+      subject { Direction.find_value(direction)}
 
-        expect(index).to eql(0)
+      context 'when north direction' do
+        let(:direction) { :NORTH }
+
+        it { is_expected.to eq(0) }
       end
 
-      it 'should find WEST direction value' do
-        index = Direction.find_value(:WEST)
+      context 'when west direction' do
+        let(:direction) { :WEST }
 
-        expect(index).to eql(1)
+        it { is_expected.to eq(1) }
       end
 
-      it 'should find SOUTH direction value' do
-        index = Direction.find_value(:SOUTH)
+      context 'when south direction' do
+        let(:direction) { :SOUTH }
 
-        expect(index).to eql(2)
+        it { is_expected.to eq(2) }
       end
 
-      it 'should find EAST direction value' do
-        index = Direction.find_value(:EAST)
+      context 'when east direction' do
+        let(:direction) { :EAST }
 
-        expect(index).to eql(3)
+        it { is_expected.to eq(3) }
       end
 
-      it 'should raise DirectionNameNotFoundException when using invalid direction value' do
-        expect { Direction.find_value(:INVALID_DIRECTION) }.to raise_error DirectionValueNotFoundException
+      context 'when invalid direction' do
+        let(:direction) { :INVALID_DIRECTION }
+        
+        it 'should raise DirectionNameNotFoundException when using invalid direction value' do
+          expect { subject }.to raise_error DirectionValueNotFoundException
+        end
+
       end
     end
 
     context 'should get direction' do
-      it 'should get NORTH direction' do
-        direction = Direction.get_direction(:NORTH)
 
-        expect(direction.name).to eql(:NORTH)
-        expect(direction.coordinate.x).to eql(0)
-        expect(direction.coordinate.y).to eql(1)
+      subject { Direction.get_direction(value) }
+
+      context 'when get north direction' do
+        let(:value) { :NORTH }
+
+        it { 
+          is_expected.to have_attributes(
+            name: :NORTH, 
+            coordinate: have_attributes(
+              x: 0, 
+              y: 1,
+            ),
+          )
+        }
       end
 
-      it 'should get WEST direction' do
-        direction = Direction.get_direction(:WEST)
+      context 'should get WEST direction' do
+        let(:value) { :WEST }
 
-        expect(direction.name).to eql(:WEST)
-        expect(direction.coordinate.x).to eql(-1)
-        expect(direction.coordinate.y).to eql(0)
+        it {
+          is_expected.to have_attributes(
+            name: :WEST, 
+            coordinate: have_attributes(
+              x: -1, 
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get SOUTH direction' do
-        direction = Direction.get_direction(:SOUTH)
+      context 'should get SOUTH direction' do
+        let(:value) { :SOUTH }
 
-        expect(direction.name).to eql(:SOUTH)
-        expect(direction.coordinate.x).to eql(0)
-        expect(direction.coordinate.y).to eql(-1)
+        it {
+          is_expected.to have_attributes(
+            name: :SOUTH, 
+            coordinate: have_attributes(
+              x: 0, 
+              y: -1,
+            ),
+          )
+        }
       end
 
-      it 'should get EAST direction' do
-        direction = Direction.get_direction(:EAST)
+      context 'should get EAST direction' do
+        let(:value) { :EAST }
 
-        expect(direction.name).to eql(:EAST)
-        expect(direction.coordinate.x).to eql(1)
-        expect(direction.coordinate.y).to eql(0)
+        it {
+          is_expected.to have_attributes(
+            name: :EAST, 
+            coordinate: have_attributes(
+              x: 1, 
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get invalid direction' do
-        expect { Direction.get_direction(:INVALID_DIRECTION) }.to raise_error DirectionNotFoundException
+      context 'when invalid direction' do
+        let(:value) { :INVALID_DIRECTION }
+
+        it 'should get invalid direction' do
+          expect { subject }.to raise_error DirectionNotFoundException
+        end
       end
     end
 
     context 'should get valid left direction' do
-      it 'should get left direction of NORTH direction' do
-        left_direction = Direction.get_left_direction(:NORTH)
+      subject { Direction.get_left_direction(value) }
 
-        expect(left_direction.name).to eql(:WEST)
-        expect(left_direction.coordinate.x).to eql(-1)
-        expect(left_direction.coordinate.y).to eql(0)
+      context 'when getting left direction of NORTH direction' do
+        let(:value) { :NORTH }
+
+        it {
+          is_expected.to have_attributes(
+            name: :WEST,
+            coordinate: have_attributes(
+              x: -1,
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get left direction of WEST direction' do
-        left_direction = Direction.get_left_direction(:WEST)
+      context 'should get left direction of WEST direction' do
+        let(:value) { :WEST }
 
-        expect(left_direction.name).to eql(:SOUTH)
-        expect(left_direction.coordinate.x).to eql(0)
-        expect(left_direction.coordinate.y).to eql(-1)
+        it {
+          is_expected.to have_attributes(
+            name: :SOUTH,
+            coordinate: have_attributes(
+              x: 0,
+              y: -1,
+            ),
+          )
+        }
       end
 
-      it 'should get left direction of SOUTH direction' do
-        left_direction = Direction.get_left_direction(:SOUTH)
+      context 'should get left direction of SOUTH direction' do
+        let(:value) { :SOUTH }
 
-        expect(left_direction.name).to eql(:EAST)
-        expect(left_direction.coordinate.x).to eql(1)
-        expect(left_direction.coordinate.y).to eql(0)
+        it {
+          is_expected.to have_attributes(
+            name: :EAST,
+            coordinate: have_attributes(
+              x: 1,
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get left direction of EAST direction' do
-        left_direction = Direction.get_left_direction(:EAST)
+      context 'should get left direction of EAST direction' do
+        let(:value) { :EAST }
 
-        expect(left_direction.name).to eql(:NORTH)
-        expect(left_direction.coordinate.x).to eql(0)
-        expect(left_direction.coordinate.y).to eql(1)
+        it {
+          is_expected.to have_attributes(
+            name: :NORTH,
+            coordinate: have_attributes(
+              x: 0,
+              y: 1,
+            ),
+          )
+        }
+      end
+
+      context 'when getting error' do
+        let(:value) { 'north' }
+        it 'should raise ArgumentError when get left direction of an invalid direction' do
+          expect { subject }.to raise_error ArgumentError
+        end
       end
     end
 
-    context 'should get valid right direction' do
-      it 'should get right direction of NORTH direction' do
-        right_direction = Direction.get_right_direction(:NORTH)
+    context 'when getting right direction xxxx' do
+      subject { Direction.get_right_direction(value) }
 
-        expect(right_direction.name).to eql(:EAST)
-        expect(right_direction.coordinate.x).to eql(1)
-        expect(right_direction.coordinate.y).to eql(0)
+      context 'should get right direction of NORTH direction' do
+        let(:value) { :NORTH }
+
+        it {
+          is_expected.to have_attributes(
+            name: :EAST,
+            coordinate: have_attributes(
+              x: 1,
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get right direction of WEST direction' do
-        right_direction = Direction.get_right_direction(:WEST)
+      context 'should get right direction of WEST direction' do
+        let(:value) { :WEST }
 
-        expect(right_direction.name).to eql(:NORTH)
-        expect(right_direction.coordinate.x).to eql(0)
-        expect(right_direction.coordinate.y).to eql(1)
+        it {
+          is_expected.to have_attributes(
+            name: :NORTH,
+            coordinate: have_attributes(
+              x: 0,
+              y: 1,
+            ),
+          )
+        }
       end
 
-      it 'should get right direction of SOUTH direction' do
-        right_direction = Direction.get_right_direction(:SOUTH)
+      context 'should get right direction of SOUTH direction' do
+        let(:value) { :SOUTH }
 
-        expect(right_direction.name).to eql(:WEST)
-        expect(right_direction.coordinate.x).to eql(-1)
-        expect(right_direction.coordinate.y).to eql(0)
+        it {
+          is_expected.to have_attributes(
+            name: :WEST,
+            coordinate: have_attributes(
+              x: -1,
+              y: 0,
+            ),
+          )
+        }
       end
 
-      it 'should get right direction of EAST direction' do
-        right_direction = Direction.get_right_direction(:EAST)
+      context 'should get right direction of EAST direction' do
+        let(:value) { :EAST }
 
-        expect(right_direction.name).to eql(:SOUTH)
-        expect(right_direction.coordinate.x).to eql(0)
-        expect(right_direction.coordinate.y).to eql(-1)
+        it {
+          is_expected.to have_attributes(
+            name: :SOUTH,
+            coordinate: have_attributes(
+              x: 0,
+              y: -1,
+            ),
+          )
+        }
       end
-    end
+      
+      context 'when error' do
+        let(:value) { 'south' }
 
-    context 'should raise ArgumentError when getting left or right direction of an invalid direction' do
-      it 'should raise ArgumentError when get left direction of an invalid direction' do
-        expect { Direction.get_left_direction('north') }.to raise_error ArgumentError
-      end
-
-      it 'should raise ArgumentError when getting right direction of an invalid direction' do
-        expect { Direction.get_right_direction('south') }.to raise_error ArgumentError
-
+        it 'should raise ArgumentError when getting right direction of an invalid direction' do
+          expect { subject }.to raise_error ArgumentError
+        end
       end
     end
   end

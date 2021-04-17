@@ -87,9 +87,9 @@ module ToyRobot
       if is_on_board?
         coordinate = @direction.coordinate
         if @current_coordinate.x + coordinate.x >= 0 &&
-           @current_coordinate.x + coordinate.x <= @board.width &&
+           @current_coordinate.x + coordinate.x < @board.width &&
            @current_coordinate.y + coordinate.y >= 0 &&
-           @current_coordinate.y + coordinate.y <= @board.height
+           @current_coordinate.y + coordinate.y < @board.height
           true
         else
           false

@@ -3,20 +3,17 @@ require_relative '../lib/entity/coordinate'
 module ToyRobot
   describe Coordinate do
     let(:random) { Random.new }
+    let(:subject) { coordinate.add_coordinate(another_coordinate) }
+    let(:x1) { random.rand(-Random.new_seed..Random.new_seed)}
+    let(:y1) { random.rand(-Random.new_seed..Random.new_seed)}
+    let(:x2) { random.rand(-Random.new_seed..Random.new_seed)}
+    let(:y2) {random.rand(-Random.new_seed..Random.new_seed) }
+    let(:coordinate) { Coordinate.new(x1, y1) }
+    let(:another_coordinate) { Coordinate.new(x2, y2) }
 
     it 'should add coordinate' do
-      x1 = random.rand(-Random.new_seed..Random.new_seed)
-      y1 = random.rand(-Random.new_seed..Random.new_seed)
-
-      x2 = random.rand(-Random.new_seed..Random.new_seed)
-      y2 = random.rand(-Random.new_seed..Random.new_seed)
-
-      coordinate = Coordinate.new(x1, y1)
-      another_coordinate = Coordinate.new(x2, y2)
-      coordinate.add_coordinate(another_coordinate)
-
-      expect(coordinate.x).to eql(x1 + x2)
-      expect(coordinate.y).to eql(y1 + y2)
+      expect { subject }.to change { coordinate.x }.from(x1).to(x1 + x2)
+        .and change { coordinate.y }.from(y1).to(y1 + y2) 
     end
   end
 end

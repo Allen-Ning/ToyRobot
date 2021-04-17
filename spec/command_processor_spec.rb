@@ -1,58 +1,96 @@
+require 'ffaker'
+
 require_relative '../lib/simulator/command_processor'
 require_relative '../lib/entity/robot'
 
 module ToyRobot
   describe CommandProcessor do
-    let(:random) { Random.new }
     let(:robot) { Robot.new }
     let(:board) { Board.new }
     let(:command_processor) { CommandProcessor.new(robot, board) }
 
+    subject { command_processor.process_command(command) }
+
     context 'should process command' do
-      it 'should invoke set position method' do
-        expect(robot).to receive(:place).with(:NORTH, 2, 3)
+      context 'a' do
+        let(:command) { 'PLACE 2,3,NORTH' }
 
-        command_processor.process_command('PLACE 2,3,NORTH')
+        it 'should invoke set position method' do
+          expect(robot).to receive(:place).with(:NORTH, 2, 3)
+
+          subject
+        end
+      end
+      
+      context 'b' do
+        let(:command) { 'LEFT' }
+
+        it 'should invoke turn left method' do
+          expect(robot).to receive(:turn_left)
+
+          subject
+        end
       end
 
-      it 'should invoke turn left method' do
-        expect(robot).to receive(:turn_left)
+      context 'c' do
+        let(:command) { 'RIGHT' }
 
-        command_processor.process_command('LEFT')
+        it 'should invoke turn right method' do
+          expect(robot).to receive(:turn_right)
+
+          subject
+        end
       end
 
-      it 'should invoke turn right method' do
-        expect(robot).to receive(:turn_right)
+      context 'd' do
+        let(:command) { 'MOVE' }
+        it 'should invoke move method' do
+          expect(robot).to receive(:move)
 
-        command_processor.process_command('RIGHT')
+          subject
+        end
       end
 
-      it 'should invoke move method' do
-        expect(robot).to receive(:move)
+      context 'e' do
+        let(:command) { 'REPORT' }
 
-        command_processor.process_command('MOVE')
+        it 'should invoke report method' do
+          expect(robot).to receive(:report)
+
+          subject
+        end
       end
 
-      it 'should invoke report method' do
-        expect(robot).to receive(:report)
+      context 'f' do
+        let(:command) { '' }
 
-        command_processor.process_command('REPORT')
+        it 'should ignore blank lines' do
+          expect(subject).to be_nil
+        end
       end
 
-      it 'should ignore blank lines' do
-        expect(command_processor.process_command('')).to be_nil
+      context 'g' do
+        let(:command) { 'INVALID_COMMAND' }
+
+        it 'should raise CommandParseException for invalid commands' do
+          expect{ subject }.to raise_error(CommandParseException)
+        end
       end
 
-      it 'should raise CommandParseException for invalid commands' do
-        expect{ command_processor.process_command('INVALID_COMMAND') }.to raise_error(CommandParseException)
+      context 'h' do
+        let(:command) { 'PLACE 2,3,4,NORTH' }
+
+        it 'should raise CommandParseException for PLACE commands which have not 3 parameters' do
+          expect{ subject }.to raise_error(CommandParseException)
+        end
       end
 
-      it 'should raise CommandParseException for PLACE commands which have not 3 parameters' do
-        expect{ command_processor.process_command('PLACE 2,3,4,NORTH') }.to raise_error(CommandParseException)
-      end
+      context 'i' do
+        let(:command) { 'PLACE one,two,NORTH' }
 
-      it 'should raise CommandParseException for PLACE commands with wrong type coordinates' do
-        expect{ command_processor.process_command('PLACE one,two,NORTH') }.to raise_error(CommandParseException)
+        it 'should raise CommandParseException for PLACE commands with wrong type coordinates' do
+          expect{ subject }.to raise_error(CommandParseException)
+        end
       end
     end
   end
