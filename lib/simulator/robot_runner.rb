@@ -1,10 +1,11 @@
-require_relative '../entity/robot'
-require_relative '../entity/board'
-require_relative '../simulator/command_processor'
+# frozen_string_literal: true
+
+require 'model/robot'
+require 'model/board'
+require 'simulator/command_processor'
 
 module ToyRobot
   class RobotRunner
-
     # @param [Robot] robot
     # @param [Board] board
     def initialize(robot = Robot.new, board = Board.new)
@@ -14,8 +15,8 @@ module ToyRobot
     # @param  [Array] data
     # @return [Void]
     def pretty_print(data)
-      output = data.inject('') {|total, each| total + each.to_s + ' ' }
-      puts output unless output.strip.size. == 0
+      output = data.inject('') { |total, each| "#{total}#{each} " }
+      puts output unless output.strip.size.zero?
     end
 
     # @return [void]

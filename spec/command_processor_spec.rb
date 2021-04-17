@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ffaker'
 
 require_relative '../lib/simulator/command_processor'
@@ -21,7 +23,7 @@ module ToyRobot
           subject
         end
       end
-      
+
       context 'b' do
         let(:command) { 'LEFT' }
 
@@ -73,7 +75,7 @@ module ToyRobot
         let(:command) { 'INVALID_COMMAND' }
 
         it 'should raise CommandParseException for invalid commands' do
-          expect{ subject }.to raise_error(CommandParseException)
+          expect { subject }.to raise_error(CommandParseException)
         end
       end
 
@@ -81,7 +83,7 @@ module ToyRobot
         let(:command) { 'PLACE 2,3,4,NORTH' }
 
         it 'should raise CommandParseException for PLACE commands which have not 3 parameters' do
-          expect{ subject }.to raise_error(CommandParseException)
+          expect { subject }.to raise_error(CommandParseException)
         end
       end
 
@@ -89,7 +91,7 @@ module ToyRobot
         let(:command) { 'PLACE one,two,NORTH' }
 
         it 'should raise CommandParseException for PLACE commands with wrong type coordinates' do
-          expect{ subject }.to raise_error(CommandParseException)
+          expect { subject }.to raise_error(CommandParseException)
         end
       end
     end

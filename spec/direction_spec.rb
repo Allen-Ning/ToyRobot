@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/entity/direction'
 
 module ToyRobot
@@ -6,17 +8,18 @@ module ToyRobot
       it 'should not create invalid direction instance' do
         random = Random.new
 
-        expect { Direction.new(
-                  :SOUTHEAST,
-                  random.rand(-Random.new_seed..Random.new_seed),
-                  random.rand(-Random.new_seed..Random.new_seed),
-                )
-               }.to raise_error DirectionInvalidValueException
+        expect do
+          Direction.new(
+            :SOUTHEAST,
+            random.rand(-Random.new_seed..Random.new_seed),
+            random.rand(-Random.new_seed..Random.new_seed)
+          )
+        end.to raise_error DirectionInvalidValueException
       end
     end
 
     context 'should find value' do
-      subject { Direction.find_value(direction)}
+      subject { Direction.find_value(direction) }
 
       context 'when north direction' do
         let(:direction) { :NORTH }
@@ -44,28 +47,26 @@ module ToyRobot
 
       context 'when invalid direction' do
         let(:direction) { :INVALID_DIRECTION }
-        
+
         it 'should raise DirectionNameNotFoundException when using invalid direction value' do
           expect { subject }.to raise_error DirectionValueNotFoundException
         end
-
       end
     end
 
     context 'should get direction' do
-
       subject { Direction.get_direction(value) }
 
       context 'when get north direction' do
         let(:value) { :NORTH }
 
-        it { 
+        it {
           is_expected.to have_attributes(
-            name: :NORTH, 
+            name: :NORTH,
             coordinate: have_attributes(
-              x: 0, 
-              y: 1,
-            ),
+              x: 0,
+              y: 1
+            )
           )
         }
       end
@@ -75,11 +76,11 @@ module ToyRobot
 
         it {
           is_expected.to have_attributes(
-            name: :WEST, 
+            name: :WEST,
             coordinate: have_attributes(
-              x: -1, 
-              y: 0,
-            ),
+              x: -1,
+              y: 0
+            )
           )
         }
       end
@@ -89,11 +90,11 @@ module ToyRobot
 
         it {
           is_expected.to have_attributes(
-            name: :SOUTH, 
+            name: :SOUTH,
             coordinate: have_attributes(
-              x: 0, 
-              y: -1,
-            ),
+              x: 0,
+              y: -1
+            )
           )
         }
       end
@@ -103,11 +104,11 @@ module ToyRobot
 
         it {
           is_expected.to have_attributes(
-            name: :EAST, 
+            name: :EAST,
             coordinate: have_attributes(
-              x: 1, 
-              y: 0,
-            ),
+              x: 1,
+              y: 0
+            )
           )
         }
       end
@@ -132,8 +133,8 @@ module ToyRobot
             name: :WEST,
             coordinate: have_attributes(
               x: -1,
-              y: 0,
-            ),
+              y: 0
+            )
           )
         }
       end
@@ -146,8 +147,8 @@ module ToyRobot
             name: :SOUTH,
             coordinate: have_attributes(
               x: 0,
-              y: -1,
-            ),
+              y: -1
+            )
           )
         }
       end
@@ -160,8 +161,8 @@ module ToyRobot
             name: :EAST,
             coordinate: have_attributes(
               x: 1,
-              y: 0,
-            ),
+              y: 0
+            )
           )
         }
       end
@@ -174,8 +175,8 @@ module ToyRobot
             name: :NORTH,
             coordinate: have_attributes(
               x: 0,
-              y: 1,
-            ),
+              y: 1
+            )
           )
         }
       end
@@ -199,8 +200,8 @@ module ToyRobot
             name: :EAST,
             coordinate: have_attributes(
               x: 1,
-              y: 0,
-            ),
+              y: 0
+            )
           )
         }
       end
@@ -213,8 +214,8 @@ module ToyRobot
             name: :NORTH,
             coordinate: have_attributes(
               x: 0,
-              y: 1,
-            ),
+              y: 1
+            )
           )
         }
       end
@@ -227,8 +228,8 @@ module ToyRobot
             name: :WEST,
             coordinate: have_attributes(
               x: -1,
-              y: 0,
-            ),
+              y: 0
+            )
           )
         }
       end
@@ -241,12 +242,12 @@ module ToyRobot
             name: :SOUTH,
             coordinate: have_attributes(
               x: 0,
-              y: -1,
-            ),
+              y: -1
+            )
           )
         }
       end
-      
+
       context 'when error' do
         let(:value) { 'south' }
 

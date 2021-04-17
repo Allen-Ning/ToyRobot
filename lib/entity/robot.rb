@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../entity/direction'
 
 module ToyRobot
@@ -15,7 +17,7 @@ module ToyRobot
     # @param  [Fixnum] y
     # @return [Boolean]
     def place(direction_name, x, y)
-      if !has_been_placed? && is_coordinate_on_table?(x, y)
+      if !placed? && coordinate_on_table?(x, y)
         @direction = Direction.get_direction(direction_name)
         set_coordinate(Coordinate.new(x, y))
         true
@@ -26,7 +28,7 @@ module ToyRobot
 
     # @return [Boolean]
     def turn_left
-      if is_on_board?
+      if on_board?
         @direction = Direction.get_left_direction(@direction.name)
         true
       else
@@ -36,7 +38,7 @@ module ToyRobot
 
     # @return [Boolean]
     def turn_right
-      if is_on_board?
+      if on_board?
         @direction = Direction.get_right_direction(@direction.name)
         true
       else
@@ -46,7 +48,7 @@ module ToyRobot
 
     # @return [Boolean]
     def move
-      if can_move?
+      if moveable?
         set_coordinate(@direction.coordinate)
         true
       else
@@ -56,19 +58,19 @@ module ToyRobot
 
     # @return [Array]
     def report
-      is_on_board? ? [ @direction.name, @current_coordinate.x, @current_coordinate.y] : []
+      on_board? ? [@direction.name, @current_coordinate.x, @current_coordinate.y] : []
     end
 
     # @return [Boolean]
-    def has_been_placed?
+    def placed?
       @board && @current_coordinate && @direction ? true : false
     end
 
     # @param  [Fixnum] x
     # @param  [Fixnum] y
     # @return [Boolean]
-    def is_coordinate_on_table?(x, y)
-      (!@board.nil? && x <= @board.width && y <= @board.height) ? true : false
+    def coordinate_on_table?(x, y)
+      !@board.nil? && x <= @board.width && y <= @board.height ? true : false
     end
 
     # @param  [Coordinate] coordinate
@@ -78,27 +80,25 @@ module ToyRobot
     end
 
     # @return [Boolean]
-    def is_on_board?
+    def on_board?
       !@board.nil? && !@current_coordinate.nil? && !@direction.nil?
     end
 
     # @return [Boolean]
-    def can_move?
-      if is_on_board?
-        coordinate = @direction.coordinate
-        if @current_coordinate.x + coordinate.x >= 0 &&
-           @current_coordinate.x + coordinate.x < @board.width &&
-           @current_coordinate.y + coordinate.y >= 0 &&
-           @current_coordinate.y + coordinate.y < @board.height
-          true
-        else
-          false
-        end
+    def moveable?
+      return false unless on_board?
+
+      coordinate = @direction.coordinate
+      if @current_coordinate.x + coordinate.x >= 0 &&
+         @current_coordinate.x + coordinate.x < @board.width &&
+         @current_coordinate.y + coordinate.y >= 0 &&
+         @current_coordinate.y + coordinate.y < @board.height
+        true
       else
         false
       end
     end
 
-    private :has_been_placed?, :is_coordinate_on_table?, :set_coordinate, :is_on_board?, :can_move?
+    private :placed?, :coordinate_on_table?, :set_coordinate, :on_board?, :moveable?
   end
 end

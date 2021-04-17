@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../exception/invalid_board_width_exception'
 require_relative '../exception/invalid_board_height_exception'
 
