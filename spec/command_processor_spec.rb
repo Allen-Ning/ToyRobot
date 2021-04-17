@@ -74,24 +74,24 @@ module ToyRobot
       context 'g' do
         let(:command) { 'INVALID_COMMAND' }
 
-        it 'should raise CommandParseException for invalid commands' do
-          expect { subject }.to raise_error(CommandParseException)
+        it 'should raise CommandParseError for invalid commands' do
+          expect { subject }.to raise_error(CommandParseError)
         end
       end
 
       context 'h' do
         let(:command) { 'PLACE 2,3,4,NORTH' }
 
-        it 'should raise CommandParseException for PLACE commands which have not 3 parameters' do
-          expect { subject }.to raise_error(CommandParseException)
+        it 'should raise CommandParseError for PLACE commands which have not 3 parameters' do
+          expect { subject }.to raise_error(CommandParseError)
         end
       end
 
       context 'i' do
         let(:command) { 'PLACE one,two,NORTH' }
 
-        it 'should raise CommandParseException for PLACE commands with wrong type coordinates' do
-          expect { subject }.to raise_error(CommandParseException)
+        it 'should raise CommandParseError for PLACE commands with wrong type coordinates' do
+          expect { subject }.to raise_error(CommandParseError)
         end
       end
     end

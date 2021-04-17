@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module ToyRobot
-  class DirectionValueNotFoundException < StandardError
+  class InvalidBoardHeightError < StandardError
   end
 end

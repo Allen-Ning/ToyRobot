@@ -14,7 +14,7 @@ module ToyRobot
             random.rand(-Random.new_seed..Random.new_seed),
             random.rand(-Random.new_seed..Random.new_seed)
           )
-        end.to raise_error DirectionInvalidValueException
+        end.to raise_error DirectionInvalidValueError
       end
     end
 
@@ -48,8 +48,8 @@ module ToyRobot
       context 'when invalid direction' do
         let(:direction) { :INVALID_DIRECTION }
 
-        it 'should raise DirectionNameNotFoundException when using invalid direction value' do
-          expect { subject }.to raise_error DirectionValueNotFoundException
+        it 'should raise DirectionNameNotFoundError when using invalid direction value' do
+          expect { subject }.to raise_error DirectionValueNotFoundError
         end
       end
     end
@@ -117,7 +117,7 @@ module ToyRobot
         let(:value) { :INVALID_DIRECTION }
 
         it 'should get invalid direction' do
-          expect { subject }.to raise_error DirectionNotFoundException
+          expect { subject }.to raise_error DirectionNotFoundError
         end
       end
     end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../exception/direction_invalid_value_exception'
-require_relative '../exception/direction_not_found_exception'
-require_relative '../exception/direction_name_not_found_exception'
-require_relative '../exception/direction_value_not_found_exception'
+require 'error/direction_invalid_value_error'
+require 'error/direction_not_found_error'
+require 'error/direction_name_not_found_error'
+require 'error/direction_value_not_found_error'
 
 module ToyRobot
   class Direction
@@ -15,9 +15,9 @@ module ToyRobot
     # @param [Symbol] name
     # @param [Fixnum] x
     # @param [Fixnum] y
-    # @raise [DirectionInvalidValueException]
+    # @raise [DirectionInvalidValueError]
     def initialize(name, x, y)
-      raise DirectionInvalidValueException, 'direction value is invalid' unless DIRECTIONS.key? name
+      raise DirectionInvalidValueError, 'direction value is invalid' unless DIRECTIONS.key? name
 
       @name = name
       @coordinate = Coordinate.new(x, y)
@@ -25,7 +25,7 @@ module ToyRobot
 
     # @param  [Symbol] name
     # @return [Direction]
-    # @raise  [DirectionNotFoundException]
+    # @raise  [DirectionNotFoundError]
     def self.get_direction(name)
       case name
       when :NORTH
@@ -37,7 +37,7 @@ module ToyRobot
       when :EAST
         Direction.new(:EAST, 1, 0)
       else
-        raise DirectionNotFoundException, 'direction cannot be found by the given name'
+        raise DirectionNotFoundError, 'direction cannot be found by the given name'
       end
     end
 
@@ -46,7 +46,7 @@ module ToyRobot
     # @raise  [DirectionValueNotFound]
     def self.find_value(name)
       value = DIRECTIONS[name]
-      value.nil? ? (raise DirectionValueNotFoundException, 'direction value cannot be found by the given name') : value
+      value.nil? ? (raise DirectionValueNotFoundError, 'direction value cannot be found by the given name') : value
     end
 
     # @param  [Symbol] name

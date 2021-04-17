@@ -23,7 +23,7 @@ module ToyRobot
         let(:width) { FFaker::Random.rand(-1000..-1) }
 
         it 'does not create board with invalid board height' do
-          expect { subject }.to raise_error InvalidBoardWidthException
+          expect { subject }.to raise_error InvalidBoardWidthError
         end
       end
 
@@ -31,7 +31,7 @@ module ToyRobot
         let(:height) { FFaker::Random.rand(-1000..-1) }
 
         it 'does not create invalid board with invalid height' do
-          expect { subject }.to raise_error InvalidBoardHeightException
+          expect { subject }.to raise_error InvalidBoardHeightError
         end
       end
     end
