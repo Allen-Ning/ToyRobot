@@ -13,17 +13,14 @@ module ToyRobot
       @board = board
     end
 
-    # @param  [String]   raw_command
-    # @return [Array,nil]
+    # @param  [String] raw_command
+    # @return [Boolean]
     # @raise CommandParseError
     def process_command(raw_command)
-      # multiple space
-      command_match = raw_command.split(' ').map(&:strip)
-      return if command_match.size.zero?
-
-      case command_match[0]
+      command_name, command_params = parse_command(raw_command)
+      case command_name
       when 'PLACE'
-        direction, x, y = place_command_parameters(command_match[1])
+        direction, x, y = place_command_parameters(command_params)
         @robot.place(board: @board, direction_name: direction, x: x, y: y)
       when 'LEFT'
         @robot.turn_left
@@ -34,11 +31,22 @@ module ToyRobot
       when 'REPORT'
         @robot.report
       else
-        raise CommandParseError, "unrecognized command - #{command_match[0]}"
+        raise CommandParseError, "unrecognized command - #{raw_command}"
       end
     end
 
     private
+
+    # @param  [String] raw_command
+    # @return [Array]
+    def parse_command(raw_command)
+      command_match = raw_command.split(/\s+/).map(&:strip)
+      return [nil, nil] if command_match.size.zero?
+
+      command_name = command_match[0]
+      command_params = command_match[1]
+      [command_name, command_params]
+    end
 
     # @param  [String] params_str
     # @return [Array]

@@ -48,6 +48,7 @@ module ToyRobot
       # @raise  [DirectionValueNotFound]
       def find_value(name)
         value = DIRECTIONS.fetch(name, nil)
+
         value.nil? ? (raise DirectionValueNotFoundError, 'direction value cannot be found by the given name') : value
       end
 
@@ -59,19 +60,26 @@ module ToyRobot
 
         current_value = find_value(name)
         next_value = (current_value - 1 + DIRECTIONS.size) % DIRECTIONS.size
-        name = INVERTED_DIRECTIONS[next_value]
-        direction(name)
+        next_direction(next_value)
       end
 
       # @param  [Direction] name
       # @return [Direction]
-      # @raise  [ArgumentError]
+      # @raise  [DirectionNotFoundError]
       def right_direction(name)
         raise DirectionNotFoundError, 'direction cannot be found by the given name' unless DIRECTIONS.key?(name)
 
         current_value = find_value(name)
         next_value = (current_value + 1) % DIRECTIONS.size
-        name = INVERTED_DIRECTIONS[next_value]
+        next_direction(next_value)
+      end
+
+      private
+
+      # @param  [Direction] value
+      # @return [Direction]
+      def next_direction(value)
+        name = INVERTED_DIRECTIONS[value]
         direction(name)
       end
     end

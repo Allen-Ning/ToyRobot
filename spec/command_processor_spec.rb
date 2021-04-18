@@ -10,84 +10,87 @@ module ToyRobot
 
     subject { command_processor.process_command(command) }
 
-    context 'should process command' do
-      context 'a' do
-        let(:command) { 'PLACE 2,3,NORTH' }
+    describe '#process_command' do
+      context 'when PLACE command is processed' do
+        let(:x) { FFaker::Random.rand(0..board.width - 1) }
+        let(:y) { FFaker::Random.rand(0..board.height - 1) }
+        let(:command) { "PLACE #{x},#{y},NORTH" }
 
-        it 'should invoke set position method' do
-          expect(robot).to receive(:place).with(board: board, direction_name: :NORTH, x: 2, y: 3)
+        it 'invokes set position method' do
+          expect(robot).to receive(:place).with(board: board, direction_name: :NORTH, x: x, y: y)
 
           subject
         end
       end
 
-      context 'b' do
+      context 'when a LEFT command is processed' do
         let(:command) { 'LEFT' }
 
-        it 'should invoke turn left method' do
+        it 'invokes turn left method' do
           expect(robot).to receive(:turn_left)
 
           subject
         end
       end
 
-      context 'c' do
+      context 'when a RIGHT command is processed' do
         let(:command) { 'RIGHT' }
 
-        it 'should invoke turn right method' do
+        it 'invokes turn right method' do
           expect(robot).to receive(:turn_right)
 
           subject
         end
       end
 
-      context 'd' do
+      context 'when a MOVE command is processed' do
         let(:command) { 'MOVE' }
-        it 'should invoke move method' do
+
+        it 'invokes move method' do
           expect(robot).to receive(:move)
 
           subject
         end
       end
 
-      context 'e' do
+      context 'when a REPORT command is processed' do
         let(:command) { 'REPORT' }
 
-        it 'should invoke report method' do
+        it 'invokes report method' do
           expect(robot).to receive(:report)
 
           subject
         end
       end
 
-      context 'f' do
+      context 'when no command is not given' do
         let(:command) { '' }
 
-        it 'should ignore blank lines' do
-          expect(subject).to be_nil
+        it 'raises CommandParseError' do
+          expect { subject }.to raise_error(CommandParseError)
         end
       end
 
-      context 'g' do
+      context 'when an invalid command is given' do
         let(:command) { 'INVALID_COMMAND' }
 
-        it 'should raise CommandParseError for invalid commands' do
+        it 'raises CommandParseError for invalid commands' do
           expect { subject }.to raise_error(CommandParseError)
         end
       end
 
-      context 'h' do
+      context 'when a command with too many params is given' do
         let(:command) { 'PLACE 2,3,4,NORTH' }
 
-        it 'should raise CommandParseError for PLACE commands which have not 3 parameters' do
+        it 'raises CommandParseError for PLACE commands which have not 3 parameters' do
           expect { subject }.to raise_error(CommandParseError)
         end
       end
 
-      context 'i' do
+      context 'when a command with wrong params is given' do
         let(:command) { 'PLACE one,two,NORTH' }
 
-        it 'should raise CommandParseError for PLACE commands with wrong type coordinates' do
+        it 'raises CommandParseError for PLACE commands with wrong type coordinates' do
           expect { subject }.to raise_error(CommandParseError)
         end
       end

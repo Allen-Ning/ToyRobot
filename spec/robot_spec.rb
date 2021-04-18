@@ -6,44 +6,39 @@ module ToyRobot
   describe Robot do
     let(:robot) { Robot.new }
     let(:board) { Board.new }
-    ################################################################
-    # double check bountry
-    #######################################################
     let(:x) { FFaker::Random.rand(0..board.width - 1) }
     let(:y) { FFaker::Random.rand(0..board.height - 1) }
     let(:invalid_x_coordinate) { FFaker::Random.rand(board.width + 1..board.width + 1000) }
     let(:invalid_y_coordinate) { FFaker::Random.rand(board.height + 1..board.height + 1000) }
 
     context 'when not on board' do
-      it 'should move when not on board' do
+      it 'does not move' do
         expect(robot.move).to be false
       end
 
-      it 'should not report when not on board' do
-        expect(robot.report).to eql([])
+      it 'does not report' do
+        expect(robot.report).to eq([])
       end
 
-      it 'should ignore command before a valid PLACE command' do
+      it 'ignores command before a valid PLACE command' do
         robot.move
 
-        expect(robot.report).to eql([])
+        expect(robot.report).to eq([])
       end
     end
 
     context 'when on board' do
-      context 'should set robot position' do
-        subject { robot.place(board: board, direction_name: value, x: x, y: y) }
+      describe '#place' do
+        subject { robot.place(board: board, direction_name: direction, x: x, y: y) }
 
-        context 'should set valid robot position' do
-          let(:value) { :NORTH }
+        context 'when setting valid robot position' do
+          let(:direction) { :NORTH }
 
-          it {
-            is_expected.to be true
-          }
+          it { is_expected.to be true }
         end
 
-        context 'should not set invalid robot position - x coordinate larger than the width of board' do
-          let(:value) { :WEST }
+        context 'when setting invalid robot position - x coordinate larger than the width of board' do
+          let(:direction) { :WEST }
           let(:x) { invalid_x_coordinate }
 
           it {
@@ -57,8 +52,8 @@ module ToyRobot
           }
         end
 
-        context 'should not set invalid robot position - y coordinate larger than the height of board' do
-          let(:value) { :SOUTH }
+        context 'when setting invalid robot position - y coordinate larger than the height of board' do
+          let(:direction) { :SOUTH }
           let(:x) { invalid_x_coordinate }
 
           it {
@@ -72,8 +67,8 @@ module ToyRobot
           }
         end
 
-        context 'should not set invalid robot position - x, y coordinates larger than the width and height of board' do
-          let(:value) { :EAST }
+        context 'when setting invalid robot position - x, y coordinates larger than the width and height of board' do
+          let(:direction) { :EAST }
           let(:x) { invalid_x_coordinate }
           let(:y) { invalid_y_coordinate }
 
@@ -89,59 +84,59 @@ module ToyRobot
         end
       end
 
-      context 'should turn left' do
+      describe '#turn_left' do
         subject { robot.turn_left }
 
         before do
-          robot.place(board: board, direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: direction, x: x, y: y)
         end
 
-        context 'should turn left when facing NORTH' do
-          let(:value) { :NORTH }
+        context 'when facing NORTH' do
+          let(:direction) { :NORTH }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.direction.name }
               .from(:NORTH)
               .to(:WEST)
-          end
+          }
         end
 
-        context 'should turn left when facing WEST' do
-          let(:value) { :WEST }
+        context 'when facing WEST' do
+          let(:direction) { :WEST }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.direction.name }
               .from(:WEST)
               .to(:SOUTH)
-          end
+          }
         end
 
-        context 'should turn left when facing SOUTH' do
-          let(:value) { :SOUTH }
+        context 'when facing SOUTH' do
+          let(:direction) { :SOUTH }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.direction.name }
               .from(:SOUTH)
               .to(:EAST)
-          end
+          }
         end
 
-        context 'should turn left when facing EAST' do
-          let(:value) { :EAST }
+        context 'when facing EAST' do
+          let(:direction) { :EAST }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.direction.name }
               .from(:EAST)
               .to(:NORTH)
-          end
+          }
         end
 
-        context 'should not turn left when robot is not board - x coordinate larger than the width of board' do
-          let(:value) { :NORTH }
+        context 'when robot is not board - x coordinate larger than the width of board' do
+          let(:direction) { :NORTH }
           let(:x) { invalid_x_coordinate }
 
           it {
@@ -155,11 +150,11 @@ module ToyRobot
           }
         end
 
-        context '' do
-          let(:value) { :NORTH }
+        context 'when robot is not board - y coordinate larger than the height of board' do
+          let(:direction) { :NORTH }
           let(:x) { invalid_y_coordinate }
 
-          it 'should not turn left when robot is not board - y coordinate larger than the height of board' do
+          it {
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
@@ -167,15 +162,15 @@ module ToyRobot
               .from(nil)
 
             expect(subject).to be false
-          end
+          }
         end
 
-        context '' do
-          let(:value) { :board }
+        context 'when robot is not board - x, y coordinates larger than the width and height of board' do
+          let(:direction) { :board }
           let(:x) { invalid_x_coordinate }
           let(:y) { invalid_y_coordinate }
 
-          it 'should not turn left when robot is not board - x, y coordinates larger than the width and height of board' do
+          it {
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
@@ -183,19 +178,19 @@ module ToyRobot
               .from(nil)
 
             expect(subject).to be false
-          end
+          }
         end
       end
 
-      context 'should turn right' do
+      describe '#turn_right' do
         subject { robot.turn_right }
 
         before do
-          robot.place(board: board, direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: direction, x: x, y: y)
         end
 
-        context 'should turn right when facing NORTH' do
-          let(:value) { :NORTH }
+        context 'when facing NORTH' do
+          let(:direction) { :NORTH }
 
           it {
             expect { subject }
@@ -205,8 +200,8 @@ module ToyRobot
           }
         end
 
-        context 'should turn right when facing WEST' do
-          let(:value) { :WEST }
+        context 'when facing WEST' do
+          let(:direction) { :WEST }
 
           it {
             expect { subject }
@@ -216,8 +211,8 @@ module ToyRobot
           }
         end
 
-        context 'should turn right when facing SOUTH' do
-          let(:value) { :SOUTH }
+        context 'when facing SOUTH' do
+          let(:direction) { :SOUTH }
 
           it {
             expect { subject }
@@ -227,8 +222,8 @@ module ToyRobot
           }
         end
 
-        context 'should turn right when facing EAST' do
-          let(:value) { :EAST }
+        context 'when facing EAST' do
+          let(:direction) { :EAST }
 
           it {
             expect { subject }
@@ -238,8 +233,8 @@ module ToyRobot
           }
         end
 
-        context 'should not turn right when robot is not board - x coordinate larger than the width of board' do
-          let(:value) { :NORTH }
+        context 'when robot is not board - x coordinate larger than the width of board' do
+          let(:direction) { :NORTH }
           let(:x) { invalid_x_coordinate }
 
           it {
@@ -253,8 +248,8 @@ module ToyRobot
           }
         end
 
-        context 'should not turn right when robot is not board - y coordinate larger than the height of board' do
-          let(:value) { :SOUTH }
+        context 'when robot is not board - y coordinate larger than the height of board' do
+          let(:direction) { :SOUTH }
           let(:y) { invalid_y_coordinate }
 
           it {
@@ -268,8 +263,8 @@ module ToyRobot
           }
         end
 
-        context 'should not turn right when robot is not board - x, y coordinates larger than the width and height of board' do
-          let(:value) { :WEST }
+        context 'when robot is not board - x, y coordinates larger than the width and height of board' do
+          let(:direction) { :WEST }
           let(:x) { invalid_x_coordinate }
           let(:y) { invalid_y_coordinate }
 
@@ -285,20 +280,20 @@ module ToyRobot
         end
       end
 
-      context 'should move' do
+      describe '#move' do
         let(:x) { FFaker::Random.rand(1..board.width - 2) }
         let(:y) { FFaker::Random.rand(1..board.height - 2) }
 
         subject { robot.move }
 
         before do
-          robot.place(board: board, direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: direction, x: x, y: y)
         end
 
-        context 'should move when facing NORTH' do
-          let(:value) { :NORTH }
+        context 'when facing NORTH' do
+          let(:direction) { :NORTH }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.coordinate.y }
               .from(y)
@@ -306,14 +301,14 @@ module ToyRobot
               .and not_change { robot.coordinate.x }
               .from(x)
               .and not_change { robot.direction.name }
-              .from(value)
-          end
+              .from(direction)
+          }
         end
 
-        context 'should move when facing WEST' do
-          let(:value) { :WEST }
+        context 'when facing WEST' do
+          let(:direction) { :WEST }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.coordinate.x }
               .from(x)
@@ -321,14 +316,14 @@ module ToyRobot
               .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
-              .from(value)
-          end
+              .from(direction)
+          }
         end
 
-        context 'should move when facing SOUTH' do
-          let(:value) { :SOUTH }
+        context 'when facing SOUTH' do
+          let(:direction) { :SOUTH }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.coordinate.y }
               .from(y)
@@ -336,14 +331,14 @@ module ToyRobot
               .and not_change { robot.coordinate.x }
               .from(x)
               .and not_change { robot.direction.name }
-              .from(value)
-          end
+              .from(direction)
+          }
         end
 
-        context 'should move when facing EAST' do
-          let(:value) { :EAST }
+        context 'when facing EAST' do
+          let(:direction) { :EAST }
 
-          it '' do
+          it {
             expect { subject }
               .to change { robot.coordinate.x }
               .from(x)
@@ -351,127 +346,117 @@ module ToyRobot
               .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
-              .from(value)
+              .from(direction)
+          }
+        end
+
+        context 'when not moving' do
+          context 'when moving over board width' do
+            let(:direction) { :EAST }
+            let(:x) { board.width - 1 }
+
+            it {
+              expect { subject }
+                .to not_change { robot.coordinate.x }
+                .from(x)
+                .and not_change { robot.coordinate.y }
+                .from(y)
+                .and not_change { robot.direction.name }
+                .from(direction)
+
+              expect(subject).to be false
+            }
+          end
+
+          context 'when moving less than x coordinate 0' do
+            let(:direction) { :WEST }
+            let(:x) { 0 }
+
+            it {
+              expect { subject }
+                .to not_change { robot.coordinate.x }
+                .from(x)
+                .and not_change { robot.coordinate.y }
+                .from(y)
+                .and not_change { robot.direction.name }
+                .from(direction)
+
+              expect(subject).to be false
+            }
+          end
+
+          context 'when moving over board height' do
+            let(:direction) { :NORTH }
+            let(:y) { board.height - 1 }
+
+            it {
+              expect { subject }
+                .to not_change { robot.coordinate.x }
+                .from(x)
+                .and not_change { robot.coordinate.y }
+                .from(y)
+                .and not_change { robot.direction.name }
+                .from(direction)
+
+              expect(subject).to be false
+            }
+          end
+
+          context 'when moving less than y coordinate 0' do
+            let(:direction) { :SOUTH }
+            let(:y) { 0 }
+
+            it {
+              expect { subject }
+                .to not_change { robot.coordinate.x }
+                .from(x)
+                .and not_change { robot.coordinate.y }
+                .from(y)
+                .and not_change { robot.direction.name }
+                .from(direction)
+
+              expect(subject).to be false
+            }
           end
         end
       end
 
-      context 'should not move' do
-        let(:x) { FFaker::Random.rand(1..board.width - 2) }
-        let(:y) { FFaker::Random.rand(1..board.height - 2) }
-
-        subject { robot.move }
-
-        before do
-          robot.place(board: board, direction_name: value, x: x, y: y)
-        end
-
-        context 'should not move over board width' do
-          let(:value) { :EAST }
-          let(:x) { board.width - 1 }
-
-          it '' do
-            expect { subject }
-              .to not_change { robot.coordinate.x }
-              .from(x)
-              .and not_change { robot.coordinate.y }
-              .from(y)
-              .and not_change { robot.direction.name }
-              .from(value)
-
-            expect(subject).to be false
-          end
-        end
-
-        context 'should not move less than x coordinate 0' do
-          let(:value) { :WEST }
-          let(:x) { 0 }
-
-          it '' do
-            expect { subject }
-              .to not_change { robot.coordinate.x }
-              .from(x)
-              .and not_change { robot.coordinate.y }
-              .from(y)
-              .and not_change { robot.direction.name }
-              .from(value)
-
-            expect(subject).to be false
-          end
-        end
-
-        context 'should not move over board height' do
-          let(:value) { :NORTH }
-          let(:y) { board.height - 1 }
-
-          it '' do
-            expect { subject }
-              .to not_change { robot.coordinate.x }
-              .from(x)
-              .and not_change { robot.coordinate.y }
-              .from(y)
-              .and not_change { robot.direction.name }
-              .from(value)
-
-            expect(subject).to be false
-          end
-        end
-
-        context 'should not move less than y coordinate 0' do
-          let(:value) { :SOUTH }
-          let(:y) { 0 }
-
-          it '' do
-            expect { subject }
-              .to not_change { robot.coordinate.x }
-              .from(x)
-              .and not_change { robot.coordinate.y }
-              .from(y)
-              .and not_change { robot.direction.name }
-              .from(value)
-
-            expect(subject).to be false
-          end
-        end
-      end
-
-      context 'should report' do
+      describe '#report' do
         subject { robot.report }
 
         before do
-          robot.place(board: board, direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: direction, x: x, y: y)
         end
 
-        context 'should report when facing NORTH on board' do
-          let(:value) { :NORTH }
+        context 'when facing NORTH' do
+          let(:direction) { :NORTH }
 
           it { is_expected.to eq([:NORTH, x, y]) }
         end
 
-        context 'should report when facing WEST on board' do
-          let(:value) { :WEST }
+        context 'when facing WEST' do
+          let(:direction) { :WEST }
 
           it { is_expected.to eq([:WEST, x, y]) }
         end
 
-        context 'should report when facing SOUTH on board' do
-          let(:value) { :SOUTH }
+        context 'when facing SOUTH' do
+          let(:direction) { :SOUTH }
 
           it { is_expected.to eq([:SOUTH, x, y]) }
         end
 
-        context 'should report when on facing EAST on board' do
-          let(:value) { :EAST }
+        context 'when facing EAST' do
+          let(:direction) { :EAST }
 
           it { is_expected.to eq([:EAST, x, y]) }
         end
 
-        context 'should ignore the second PLACE command' do
-          let(:value) { :EAST }
-          let(:x) { 3 }
-          let(:y) { 4 }
+        context 'when invalid command is given' do
+          let(:direction) { :EAST }
+          let(:y) { board.height - 1 }
 
-          it '' do
+          it 'ignores the second PLACE command' do
             robot.place(board: board, direction_name: :WEST, x: 2, y: 2)
 
             is_expected.to eq([:EAST, x, y])

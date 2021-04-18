@@ -2,59 +2,61 @@
 
 module ToyRobot
   describe Direction do
-    context 'should create direction instance' do
-      it 'should not create invalid direction instance' do
-        expect do
-          Direction.new(
-            name: :SOUTHEAST,
-            x: FFaker::Random.rand(-1000..1000),
-            y: FFaker::Random.rand(-1000..1000)
-          )
-        end.to raise_error DirectionInvalidValueError
+    describe '#initialize' do
+      context 'when creating direction instance' do
+        it 'does not create invalid direction instance' do
+          expect do
+            Direction.new(
+              name: :SOUTHEAST,
+              x: FFaker::Random.rand(-1000..1000),
+              y: FFaker::Random.rand(-1000..1000)
+            )
+          end.to raise_error DirectionInvalidValueError
+        end
       end
     end
 
-    context 'should find value' do
+    describe '#finds_value' do
       subject { Direction.find_value(direction) }
 
-      context 'when north direction' do
+      context 'when north direction is given' do
         let(:direction) { :NORTH }
 
         it { is_expected.to eq(0) }
       end
 
-      context 'when west direction' do
+      context 'when west direction is given' do
         let(:direction) { :WEST }
 
         it { is_expected.to eq(3) }
       end
 
-      context 'when south direction' do
+      context 'when south direction is given' do
         let(:direction) { :SOUTH }
 
         it { is_expected.to eq(2) }
       end
 
-      context 'when east direction' do
+      context 'when east direction is given' do
         let(:direction) { :EAST }
 
         it { is_expected.to eq(1) }
       end
 
-      context 'when invalid direction' do
+      context 'when invalid direction is given' do
         let(:direction) { :INVALID_DIRECTION }
 
-        it 'should raise DirectionNameNotFoundError when using invalid direction value' do
+        it 'raises DirectionNameNotFoundError' do
           expect { subject }.to raise_error DirectionValueNotFoundError
         end
       end
     end
 
-    context 'should get direction' do
-      subject { Direction.direction(value) }
+    describe '#direction' do
+      subject { Direction.direction(direction) }
 
-      context 'when get north direction' do
-        let(:value) { :NORTH }
+      context 'when getting north direction' do
+        let(:direction) { :NORTH }
 
         it {
           is_expected.to have_attributes(
@@ -67,8 +69,8 @@ module ToyRobot
         }
       end
 
-      context 'should get WEST direction' do
-        let(:value) { :WEST }
+      context 'when getting WEST direction' do
+        let(:direction) { :WEST }
 
         it {
           is_expected.to have_attributes(
@@ -81,8 +83,8 @@ module ToyRobot
         }
       end
 
-      context 'should get SOUTH direction' do
-        let(:value) { :SOUTH }
+      context 'when getting SOUTH direction' do
+        let(:direction) { :SOUTH }
 
         it {
           is_expected.to have_attributes(
@@ -95,8 +97,8 @@ module ToyRobot
         }
       end
 
-      context 'should get EAST direction' do
-        let(:value) { :EAST }
+      context 'when getting EAST direction' do
+        let(:direction) { :EAST }
 
         it {
           is_expected.to have_attributes(
@@ -109,20 +111,20 @@ module ToyRobot
         }
       end
 
-      context 'when invalid direction' do
-        let(:value) { :INVALID_DIRECTION }
+      context 'when getting an invalid direction' do
+        let(:direction) { :INVALID_DIRECTION }
 
-        it 'should get invalid direction' do
+        it 'raises DirectionNotFoundError' do
           expect { subject }.to raise_error DirectionNotFoundError
         end
       end
     end
 
-    context 'should get valid left direction' do
-      subject { Direction.left_direction(value) }
+    describe '#left_direction' do
+      subject { Direction.left_direction(direction) }
 
       context 'when getting left direction of NORTH direction' do
-        let(:value) { :NORTH }
+        let(:direction) { :NORTH }
 
         it {
           is_expected.to have_attributes(
@@ -135,8 +137,8 @@ module ToyRobot
         }
       end
 
-      context 'should get left direction of WEST direction' do
-        let(:value) { :WEST }
+      context 'when getting left direction of WEST direction' do
+        let(:direction) { :WEST }
 
         it {
           is_expected.to have_attributes(
@@ -149,8 +151,8 @@ module ToyRobot
         }
       end
 
-      context 'should get left direction of SOUTH direction' do
-        let(:value) { :SOUTH }
+      context 'when getting left direction of SOUTH direction' do
+        let(:direction) { :SOUTH }
 
         it {
           is_expected.to have_attributes(
@@ -163,8 +165,8 @@ module ToyRobot
         }
       end
 
-      context 'should get left direction of EAST direction' do
-        let(:value) { :EAST }
+      context 'when getting left direction of EAST direction' do
+        let(:direction) { :EAST }
 
         it {
           is_expected.to have_attributes(
@@ -177,19 +179,20 @@ module ToyRobot
         }
       end
 
-      context 'when getting error' do
-        let(:value) { 'north' }
-        it 'should raise DirectionNotFoundError when get left direction of an invalid direction' do
+      context 'when getting invalid directio' do
+        let(:direction) { 'north' }
+
+        it 'raises DirectionNotFoundError' do
           expect { subject }.to raise_error DirectionNotFoundError
         end
       end
     end
 
-    context 'when getting right direction xxxx' do
-      subject { Direction.right_direction(value) }
+    describe 'right_direction' do
+      subject { Direction.right_direction(direction) }
 
-      context 'should get right direction of NORTH direction' do
-        let(:value) { :NORTH }
+      context 'when getting right direction of NORTH direction' do
+        let(:direction) { :NORTH }
 
         it {
           is_expected.to have_attributes(
@@ -202,8 +205,8 @@ module ToyRobot
         }
       end
 
-      context 'should get right direction of WEST direction' do
-        let(:value) { :WEST }
+      context 'when getting right direction of WEST direction' do
+        let(:direction) { :WEST }
 
         it {
           is_expected.to have_attributes(
@@ -216,8 +219,8 @@ module ToyRobot
         }
       end
 
-      context 'should get right direction of SOUTH direction' do
-        let(:value) { :SOUTH }
+      context 'when getting right direction of SOUTH direction' do
+        let(:direction) { :SOUTH }
 
         it {
           is_expected.to have_attributes(
@@ -230,8 +233,8 @@ module ToyRobot
         }
       end
 
-      context 'should get right direction of EAST direction' do
-        let(:value) { :EAST }
+      context 'when getting right direction of EAST direction' do
+        let(:direction) { :EAST }
 
         it {
           is_expected.to have_attributes(
@@ -244,10 +247,10 @@ module ToyRobot
         }
       end
 
-      context 'when error' do
-        let(:value) { 'south' }
+      context 'when getting an invalid direction' do
+        let(:direction) { 'south' }
 
-        it 'should raise DirectionNotFoundError when getting right direction of an invalid direction' do
+        it 'raises DirectionNotFoundError' do
           expect { subject }.to raise_error DirectionNotFoundError
         end
       end

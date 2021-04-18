@@ -2,5 +2,6 @@ version: '2'
 services:
   toy_robot:
     build: .
+    command: rspec spec
     volumes:
-      - .:/toy_robot
+      - .:/app

@@ -15,7 +15,7 @@ module ToyRobot
     # @param  [Array] data
     # @return [Void]
     def pretty_print(data)
-      output = data.inject('') { |total, each| "#{total}#{each} " }
+      output = data.reduce('') { |total, each| "#{total} #{each}" }
       puts output unless output.strip.size.zero?
     end
 
