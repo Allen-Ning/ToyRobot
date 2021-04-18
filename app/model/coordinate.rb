@@ -13,7 +13,7 @@ module ToyRobot
 
     # @param  [Coordinate] coordinate
     # @return [Void]
-    def add_coordinate(coordinate)
+    def add(coordinate)
       @x += coordinate.x
       @y += coordinate.y
     end

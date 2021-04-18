@@ -16,26 +16,28 @@ module ToyRobot
     # @param [Fixnum] x
     # @param [Fixnum] y
     # @raise [DirectionInvalidValueError]
-    def initialize(name, x, y)
-      raise DirectionInvalidValueError, 'direction value is invalid' unless DIRECTIONS.key? name
+    def initialize(name:, x:, y:)
+      raise DirectionInvalidValueError, 'direction value is invalid' unless DIRECTIONS.key?(name)
 
       @name = name
       @coordinate = Coordinate.new(x: x, y: y)
     end
 
+    class << self
+
     # @param  [Symbol] name
     # @return [Direction]
     # @raise  [DirectionNotFoundError]
-    def self.get_direction(name)
+    def direction(name)
       case name
       when :NORTH
-        Direction.new(:NORTH, 0, 1)
+        Direction.new(name: :NORTH, x: 0, y: 1)
       when :WEST
-        Direction.new(:WEST, -1, 0)
+        Direction.new(name: :WEST, x: -1, y: 0)
       when :SOUTH
-        Direction.new(:SOUTH, 0, -1)
+        Direction.new(name: :SOUTH, x: 0, y: -1)
       when :EAST
-        Direction.new(:EAST, 1, 0)
+        Direction.new(name: :EAST, x: 1, y: 0)
       else
         raise DirectionNotFoundError, 'direction cannot be found by the given name'
       end
@@ -44,7 +46,7 @@ module ToyRobot
     # @param  [Symbol] name
     # @return [Fixnum]
     # @raise  [DirectionValueNotFound]
-    def self.find_value(name)
+    def find_value(name)
       value = DIRECTIONS[name]
       value.nil? ? (raise DirectionValueNotFoundError, 'direction value cannot be found by the given name') : value
     end
@@ -52,24 +54,25 @@ module ToyRobot
     # @param  [Symbol] name
     # @return [Direction]
     # @raise  [ArgumentError]
-    def self.get_left_direction(name)
+    def left_direction(name)
       raise ArgumentError, 'argument is expected to a symbol' unless name.is_a?(Symbol)
 
       value = find_value(name)
       name = INVERTED_DIRECTIONS[(value + 1) % INVERTED_DIRECTIONS.size]
-      get_direction(name)
+      direction(name)
     end
 
     # @param  [Direction] name
     # @return [Direction]
     # @raise  [ArgumentError]
-    def self.get_right_direction(name)
+    def right_direction(name)
       raise ArgumentError, 'argument is expected to a symbol' unless name.is_a?(Symbol)
 
       value = find_value(name)
       value += DIRECTIONS.size if value <= 0
       name = INVERTED_DIRECTIONS[value - 1]
-      get_direction(name)
+      direction(name)
     end
+  end
   end
 end

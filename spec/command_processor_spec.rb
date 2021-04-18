@@ -15,7 +15,7 @@ module ToyRobot
         let(:command) { 'PLACE 2,3,NORTH' }
 
         it 'should invoke set position method' do
-          expect(robot).to receive(:place).with(direction_name: :NORTH, x: 2, y: 3)
+          expect(robot).to receive(:place).with(board: board, direction_name: :NORTH, x: 2, y: 3)
 
           subject
         end

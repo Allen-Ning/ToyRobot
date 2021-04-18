@@ -4,12 +4,11 @@ require 'spec_helper'
 
 module ToyRobot
   describe Coordinate do
-    let(:random) { Random.new }
-    let(:subject) { coordinate.add_coordinate(another_coordinate) }
-    let(:x1) { random.rand(-Random.new_seed..Random.new_seed) }
-    let(:y1) { random.rand(-Random.new_seed..Random.new_seed) }
-    let(:x2) { random.rand(-Random.new_seed..Random.new_seed) }
-    let(:y2) { random.rand(-Random.new_seed..Random.new_seed) }
+    let(:subject) { coordinate.add(another_coordinate) }
+    let(:x1) { FFaker::Random.rand(-1000..1000) }
+    let(:y1) {  FFaker::Random.rand(-1000..1000) }
+    let(:x2) {  FFaker::Random.rand(-1000..1000) }
+    let(:y2) {  FFaker::Random.rand(-1000..1000) }
     let(:coordinate) { Coordinate.new(x: x1, y: y1) }
     let(:another_coordinate) { Coordinate.new(x: x2, y: y2) }
 

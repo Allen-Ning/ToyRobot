@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
+
 module ToyRobot
   describe Robot do
     let(:robot) { Robot.new }
     let(:board) { Board.new }
-    let(:random) { Random.new }
     ################################################################
     # double check bountry
     #######################################################
     let(:x) { FFaker::Random.rand(0..board.width - 1) }
     let(:y) { FFaker::Random.rand(0..board.height - 1) }
-    let(:invalid_x_coordinate) { random.rand(board.width + 1..Random.new_seed) }
-    let(:invalid_y_coordinate) { random.rand(board.height + 1..Random.new_seed) }
+    let(:invalid_x_coordinate) { FFaker::Random.rand(board.width + 1..board.width + 1000) }
+    let(:invalid_y_coordinate) { FFaker::Random.rand(board.height + 1..board.height + 1000) }
 
     context 'when not on board' do
       it 'should move when not on board' do
@@ -30,12 +31,8 @@ module ToyRobot
     end
 
     context 'when on board' do
-      before do
-        robot.set_board(board)
-      end
-
       context 'should set robot position' do
-        subject { robot.place(direction_name: value, x: x, y: y) }
+        subject { robot.place(board: board, direction_name: value, x: x, y: y) }
 
         context 'should set valid robot position' do
           let(:value) { :NORTH }
@@ -53,7 +50,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -68,7 +65,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -84,7 +81,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -96,7 +93,7 @@ module ToyRobot
         subject { robot.turn_left }
 
         before do
-          robot.place(direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: value, x: x, y: y)
         end
 
         context 'should turn left when facing NORTH' do
@@ -151,7 +148,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -166,7 +163,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -182,7 +179,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -194,7 +191,7 @@ module ToyRobot
         subject { robot.turn_right }
 
         before do
-          robot.place(direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: value, x: x, y: y)
         end
 
         context 'should turn right when facing NORTH' do
@@ -249,7 +246,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -264,7 +261,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -280,7 +277,7 @@ module ToyRobot
             expect { subject }
               .to not_change { robot.direction }
               .from(nil)
-              .and not_change { robot.current_coordinate }
+              .and not_change { robot.coordinate }
               .from(nil)
 
             expect(subject).to be false
@@ -295,7 +292,7 @@ module ToyRobot
         subject { robot.move }
 
         before do
-          robot.place(direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: value, x: x, y: y)
         end
 
         context 'should move when facing NORTH' do
@@ -303,10 +300,10 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to change { robot.current_coordinate.y }
+              .to change { robot.coordinate.y }
               .from(y)
               .to(y + 1)
-              .and not_change { robot.current_coordinate.x }
+              .and not_change { robot.coordinate.x }
               .from(x)
               .and not_change { robot.direction.name }
               .from(value)
@@ -318,10 +315,10 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to change { robot.current_coordinate.x }
+              .to change { robot.coordinate.x }
               .from(x)
               .to(x - 1)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -333,10 +330,10 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to change { robot.current_coordinate.y }
+              .to change { robot.coordinate.y }
               .from(y)
               .to(y - 1)
-              .and not_change { robot.current_coordinate.x }
+              .and not_change { robot.coordinate.x }
               .from(x)
               .and not_change { robot.direction.name }
               .from(value)
@@ -348,10 +345,10 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to change { robot.current_coordinate.x }
+              .to change { robot.coordinate.x }
               .from(x)
               .to(x + 1)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -366,7 +363,7 @@ module ToyRobot
         subject { robot.move }
 
         before do
-          robot.place(direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: value, x: x, y: y)
         end
 
         context 'should not move over board width' do
@@ -375,9 +372,9 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to not_change { robot.current_coordinate.x }
+              .to not_change { robot.coordinate.x }
               .from(x)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -392,9 +389,9 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to not_change { robot.current_coordinate.x }
+              .to not_change { robot.coordinate.x }
               .from(x)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -409,9 +406,9 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to not_change { robot.current_coordinate.x }
+              .to not_change { robot.coordinate.x }
               .from(x)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -426,9 +423,9 @@ module ToyRobot
 
           it '' do
             expect { subject }
-              .to not_change { robot.current_coordinate.x }
+              .to not_change { robot.coordinate.x }
               .from(x)
-              .and not_change { robot.current_coordinate.y }
+              .and not_change { robot.coordinate.y }
               .from(y)
               .and not_change { robot.direction.name }
               .from(value)
@@ -442,7 +439,7 @@ module ToyRobot
         subject { robot.report }
 
         before do
-          robot.place(direction_name: value, x: x, y: y)
+          robot.place(board: board, direction_name: value, x: x, y: y)
         end
 
         context 'should report when facing NORTH on board' do
@@ -475,7 +472,7 @@ module ToyRobot
           let(:y) { 5 }
 
           it '' do
-            robot.place(direction_name: :WEST, x: 2, y: 2)
+            robot.place(board: board, direction_name: :WEST, x: 2, y: 2)
 
             is_expected.to eq([:EAST, x, y])
           end

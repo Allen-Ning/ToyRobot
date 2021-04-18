@@ -9,8 +9,8 @@ module ToyRobot
     # @param [Robot] robot
     # @param [Board] board
     def initialize(robot:, board:)
-      robot.set_board(board)
       @robot = robot
+      @board = board
     end
 
     # @param  [String]   raw_command
@@ -23,8 +23,8 @@ module ToyRobot
 
       case command_match[0]
       when 'PLACE'
-        direction, x, y = get_place_command_parameters(command_match[1])
-        @robot.place(direction_name: direction, x: x, y: y)
+        direction, x, y = place_command_parameters(command_match[1])
+        @robot.place(board: @board, direction_name: direction, x: x, y: y)
       when 'LEFT'
         @robot.turn_left
       when 'RIGHT'
@@ -38,22 +38,24 @@ module ToyRobot
       end
     end
 
+    private
+
     # @param  [String] params_str
     # @return [Array]
     # @raise  [CommandParseError]
-    def get_place_command_parameters(params_str)
+    def place_command_parameters(params_str)
       params = params_str.split(',').map(&:strip)
       raise CommandParseError, 'place command must contain x,y,direction' unless params.size == 3
 
-      x, y = get_coordinates(params)
-      direction = get_direction_name(params)
+      x, y = coordinates(params)
+      direction = direction_name(params)
       [direction, x, y]
     end
 
     # @param  [String[]]  params
     # @return [Fixnum[]]
     # @raise  [CommandParseError]
-    def get_coordinates(params)
+    def coordinates(params)
       x = Integer(params[0])
       y = Integer(params[1])
       [x, y]
@@ -63,10 +65,8 @@ module ToyRobot
 
     # @param [String[]]
     # @param [Symbol]
-    def get_direction_name(params)
+    def direction_name(params)
       params[2].to_sym
     end
-
-    private :get_place_command_parameters, :get_coordinates, :get_direction_name
   end
 end

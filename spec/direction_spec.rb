@@ -4,13 +4,11 @@ module ToyRobot
   describe Direction do
     context 'should create direction instance' do
       it 'should not create invalid direction instance' do
-        random = Random.new
-
         expect do
           Direction.new(
-            :SOUTHEAST,
-            random.rand(-Random.new_seed..Random.new_seed),
-            random.rand(-Random.new_seed..Random.new_seed)
+            name: :SOUTHEAST,
+            x: FFaker::Random.rand(-1000..1000),
+            y: FFaker::Random.rand(-1000..1000)
           )
         end.to raise_error DirectionInvalidValueError
       end
@@ -53,7 +51,7 @@ module ToyRobot
     end
 
     context 'should get direction' do
-      subject { Direction.get_direction(value) }
+      subject { Direction.direction(value) }
 
       context 'when get north direction' do
         let(:value) { :NORTH }
@@ -121,7 +119,7 @@ module ToyRobot
     end
 
     context 'should get valid left direction' do
-      subject { Direction.get_left_direction(value) }
+      subject { Direction.left_direction(value) }
 
       context 'when getting left direction of NORTH direction' do
         let(:value) { :NORTH }
@@ -188,7 +186,7 @@ module ToyRobot
     end
 
     context 'when getting right direction xxxx' do
-      subject { Direction.get_right_direction(value) }
+      subject { Direction.right_direction(value) }
 
       context 'should get right direction of NORTH direction' do
         let(:value) { :NORTH }
