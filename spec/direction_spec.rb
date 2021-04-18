@@ -26,7 +26,7 @@ module ToyRobot
       context 'when west direction' do
         let(:direction) { :WEST }
 
-        it { is_expected.to eq(1) }
+        it { is_expected.to eq(3) }
       end
 
       context 'when south direction' do
@@ -38,7 +38,7 @@ module ToyRobot
       context 'when east direction' do
         let(:direction) { :EAST }
 
-        it { is_expected.to eq(3) }
+        it { is_expected.to eq(1) }
       end
 
       context 'when invalid direction' do
@@ -179,8 +179,8 @@ module ToyRobot
 
       context 'when getting error' do
         let(:value) { 'north' }
-        it 'should raise ArgumentError when get left direction of an invalid direction' do
-          expect { subject }.to raise_error ArgumentError
+        it 'should raise DirectionNotFoundError when get left direction of an invalid direction' do
+          expect { subject }.to raise_error DirectionNotFoundError
         end
       end
     end
@@ -247,8 +247,8 @@ module ToyRobot
       context 'when error' do
         let(:value) { 'south' }
 
-        it 'should raise ArgumentError when getting right direction of an invalid direction' do
-          expect { subject }.to raise_error ArgumentError
+        it 'should raise DirectionNotFoundError when getting right direction of an invalid direction' do
+          expect { subject }.to raise_error DirectionNotFoundError
         end
       end
     end

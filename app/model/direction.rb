@@ -9,7 +9,8 @@ module ToyRobot
   class Direction
     attr_reader :name, :coordinate
 
-    DIRECTIONS = { NORTH: 0, WEST: 1, SOUTH: 2, EAST: 3 }.freeze
+    DIRECTIONS = { NORTH: 0, EAST: 1, SOUTH: 2, WEST: 3 }.freeze
+
     INVERTED_DIRECTIONS = DIRECTIONS.invert
 
     # @param [Symbol] name
@@ -24,55 +25,55 @@ module ToyRobot
     end
 
     class << self
-
-    # @param  [Symbol] name
-    # @return [Direction]
-    # @raise  [DirectionNotFoundError]
-    def direction(name)
-      case name
-      when :NORTH
-        Direction.new(name: :NORTH, x: 0, y: 1)
-      when :WEST
-        Direction.new(name: :WEST, x: -1, y: 0)
-      when :SOUTH
-        Direction.new(name: :SOUTH, x: 0, y: -1)
-      when :EAST
-        Direction.new(name: :EAST, x: 1, y: 0)
-      else
-        raise DirectionNotFoundError, 'direction cannot be found by the given name'
+      # @param  [Symbol] name
+      # @return [Direction]
+      # @raise  [DirectionNotFoundError]
+      def direction(name)
+        case name
+        when :NORTH
+          Direction.new(name: :NORTH, x: 0, y: 1)
+        when :WEST
+          Direction.new(name: :WEST, x: -1, y: 0)
+        when :SOUTH
+          Direction.new(name: :SOUTH, x: 0, y: -1)
+        when :EAST
+          Direction.new(name: :EAST, x: 1, y: 0)
+        else
+          raise DirectionNotFoundError, 'direction cannot be found by the given name'
+        end
       end
-    end
 
-    # @param  [Symbol] name
-    # @return [Fixnum]
-    # @raise  [DirectionValueNotFound]
-    def find_value(name)
-      value = DIRECTIONS[name]
-      value.nil? ? (raise DirectionValueNotFoundError, 'direction value cannot be found by the given name') : value
-    end
+      # @param  [Symbol] name
+      # @return [Fixnum]
+      # @raise  [DirectionValueNotFound]
+      def find_value(name)
+        value = DIRECTIONS.fetch(name, nil)
+        value.nil? ? (raise DirectionValueNotFoundError, 'direction value cannot be found by the given name') : value
+      end
 
-    # @param  [Symbol] name
-    # @return [Direction]
-    # @raise  [ArgumentError]
-    def left_direction(name)
-      raise ArgumentError, 'argument is expected to a symbol' unless name.is_a?(Symbol)
+      # @param  [Symbol] name
+      # @return [Direction]
+      # @raise  [ArgumentError]
+      def left_direction(name)
+        raise DirectionNotFoundError, 'direction cannot be found by the given name' unless DIRECTIONS.key?(name)
 
-      value = find_value(name)
-      name = INVERTED_DIRECTIONS[(value + 1) % INVERTED_DIRECTIONS.size]
-      direction(name)
-    end
+        current_value = find_value(name)
+        next_value = (current_value - 1 + DIRECTIONS.size) % DIRECTIONS.size
+        name = INVERTED_DIRECTIONS[next_value]
+        direction(name)
+      end
 
-    # @param  [Direction] name
-    # @return [Direction]
-    # @raise  [ArgumentError]
-    def right_direction(name)
-      raise ArgumentError, 'argument is expected to a symbol' unless name.is_a?(Symbol)
+      # @param  [Direction] name
+      # @return [Direction]
+      # @raise  [ArgumentError]
+      def right_direction(name)
+        raise DirectionNotFoundError, 'direction cannot be found by the given name' unless DIRECTIONS.key?(name)
 
-      value = find_value(name)
-      value += DIRECTIONS.size if value <= 0
-      name = INVERTED_DIRECTIONS[value - 1]
-      direction(name)
-    end
+        current_value = find_value(name)
+        next_value = (current_value + 1) % DIRECTIONS.size
+        name = INVERTED_DIRECTIONS[next_value]
+        direction(name)
+      end
   end
   end
 end
