@@ -12,17 +12,12 @@ module ToyRobot
     # @param  [Fixnum] y
     # @return [Boolean]
     def place(board:, direction_name:, x:, y:)
-      # return false unless palced? && coordinate_on_table?(x, y)
+      return false if can_placed?(board: board, x: x, y: y)
 
-      # needs to change the logic here
       @board = board
-      if !placed? && coordinate_on_table?(x, y)
-        @direction = Direction.direction(direction_name)
-        add_coordinate(Coordinate.new(x: x, y: y))
-        true
-      else
-        false
-      end
+      @direction = Direction.direction(direction_name)
+      add_coordinate(Coordinate.new(x: x, y: y))
+      true
     end
 
     # @return [Boolean]
@@ -59,6 +54,11 @@ module ToyRobot
     private
 
     # @return [Boolean]
+    def can_placed?(board:, x:, y:)
+      board.nil? || placed? || !valid_coordinate?(board: board, x: x, y: y)
+    end
+
+    # @return [Boolean]
     def placed?
       @board && @coordinate && @direction
     end
@@ -66,8 +66,12 @@ module ToyRobot
     # @param  [Fixnum] x
     # @param  [Fixnum] y
     # @return [Boolean]
-    def coordinate_on_table?(x, y)
-      !@board.nil? && x <= @board.width && y <= @board.height
+    def valid_coordinate?(board:, x:, y:)
+      !board.nil? &&
+        x >= 0 &&
+        x < board.width &&
+        y >= 0 &&
+        y < board.height
     end
 
     # @param  [Coordinate] coordinate

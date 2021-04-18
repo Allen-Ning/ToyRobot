@@ -469,7 +469,7 @@ module ToyRobot
         context 'should ignore the second PLACE command' do
           let(:value) { :EAST }
           let(:x) { 3 }
-          let(:y) { 5 }
+          let(:y) { 4 }
 
           it '' do
             robot.place(board: board, direction_name: :WEST, x: 2, y: 2)

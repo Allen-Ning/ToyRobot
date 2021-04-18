@@ -74,6 +74,6 @@ module ToyRobot
         name = INVERTED_DIRECTIONS[next_value]
         direction(name)
       end
-  end
+    end
   end
 end
