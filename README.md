@@ -46,17 +46,25 @@ Displays the current placement and direction the robot is facing.<br/>
 ```
 git clone https://github.com/Allen-Ning/ToyRobot
 cd ToyRobot
-gem install bundler
-bundle install
+
+docker-compose build toy_robot
 ```
 
 ## Tests
-
 Tests can be run with the:
 
 ```
 cd ToyRobot
-rspec spec
+
+docker-compose run toy_robot rspec spec
+```
+## Lint
+Lint can be run with the:
+
+```
+cd ToyRobot
+
+docker-compose run toy_robot rubocop
 ```
 
 ## Simulator
@@ -65,12 +73,9 @@ The simulator can be run with:
 
 ```
 cd ToyRobot
-./bin/toy_robot.rb < samples/ExampleA 
-./bin/toy_robot.rb < samples/ExampleB
-./bin/toy_robot.rb < samples/ExampleC
-./bin/toy_robot.rb
- 
- 
 
+docker-compose run toy_robot bin/toy_robot.rb samples/ExampleA
+docker-compose run toy_robot bin/toy_robot.rb samples/ExampleB
+docker-compose run toy_robot bin/toy_robot.rb samples/ExampleC
 ```
 
